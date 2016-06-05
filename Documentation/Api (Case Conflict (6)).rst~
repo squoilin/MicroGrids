@@ -1,0 +1,25 @@
+.. _API:
+
+API Documentation 
+=================
+
+Constraints
+-----------
+
+.. automodule:: Constraints
+   :members:
+
+Economical analisis
+-------------------
+
+.. automodule:: Economical_Analisis
+   :members:
+
+Initialize parameters
+---------------------
+
+.. automodule:: Initialize
+   :members:
+
+
+

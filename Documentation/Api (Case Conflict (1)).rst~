@@ -1,0 +1,12 @@
+.. _API:
+
+API documentation 
+=================
+
+Constraints
+-----------
+
+.. automodule:: Constraints
+   :members:
+
+

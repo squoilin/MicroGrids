@@ -1,0 +1,724 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Model Description &mdash; Micro-Grids 1.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Micro-Grids 1.0.0 documentation" href="index.html"/>
+        <link rel="next" title="API Documentation" href="API.html"/>
+        <link rel="prev" title="Overview" href="Overview.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Micro-Grids
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Model Description</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sets">Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-analysis-parameters">Data analysis parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pv-parameters">PV parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#battery-bank-parameters">Battery bank parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#diesel-generator-parameters">Diesel generator parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#energy-balance-parameters">Energy balance parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#project-parameters">Project parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#variables">Variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pv-variables">PV variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#battery-variables">Battery variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#diesel-generator-variables">Diesel generator variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#energy-balance-variables">Energy balance variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#project-variables">Project variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#modeling-of-the-system">Modeling of the system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#objective-function">Objective function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pv-model">PV model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#diesel-generator">Diesel generator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#battery-bank">Battery bank</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#energy-constraints">Energy constraints</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial.html">Tutorial</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Micro-Grids</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Model Description</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Model Description.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="model-description">
+<h1>Model Description<a class="headerlink" href="#model-description" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sets">
+<h2>Sets<a class="headerlink" href="#sets" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="18%" />
+<col width="65%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Years</td>
+<td>n</td>
+<td>Year of the project</td>
+</tr>
+<tr class="row-odd"><td>Periods</td>
+<td>t</td>
+<td>Period that are divided the years</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-analysis-parameters">
+<h3>Data analysis parameters<a class="headerlink" href="#data-analysis-parameters" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="7%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Startdate</td>
+<td>Day</td>
+<td>Start date of the analysis</td>
+</tr>
+<tr class="row-odd"><td>PlotTime</td>
+<td>Days</td>
+<td>Number of days for the plot of energy dispatch</td>
+</tr>
+<tr class="row-even"><td>PlotDay</td>
+<td>Day</td>
+<td>Start date for the dispatch plot</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pv-parameters">
+<h3>PV parameters<a class="headerlink" href="#pv-parameters" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="9%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>PVNominalCapacity</td>
+<td>W/unit</td>
+<td>Nominal capacity of one PV unit</td>
+</tr>
+<tr class="row-odd"><td>InverterEfficiency</td>
+<td>%</td>
+<td>efficiency of the inverter to transform DC energy to AC</td>
+</tr>
+<tr class="row-even"><td>PVinvesmentCost</td>
+<td>USD/W</td>
+<td>Investment Cost to install PV panels</td>
+</tr>
+<tr class="row-odd"><td>PVEnergyProduction (t)</td>
+<td>Wh</td>
+<td>The yield of energy of one PV unit in the period t</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="battery-bank-parameters">
+<h3>Battery bank parameters<a class="headerlink" href="#battery-bank-parameters" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="7%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ChargeBatteryEfficiency</td>
+<td>%</td>
+<td>The efficiency of the battery to charge energy</td>
+</tr>
+<tr class="row-odd"><td>DischargeBatteryEfficiency</td>
+<td>%</td>
+<td>The efficiency of the battery to discharge energy</td>
+</tr>
+<tr class="row-even"><td>DeepOfDischarge</td>
+<td>%</td>
+<td>Minimum percentage of energy of the nominal capacity of the battery</td>
+</tr>
+<tr class="row-odd"><td>MaximunBatteryChargeTime</td>
+<td>hour</td>
+<td>Maximum time to charge from 0 % to a 100 % of energy in the battery</td>
+</tr>
+<tr class="row-even"><td>MaximunBatteryDischargeTime</td>
+<td>hour</td>
+<td>Maximum time to discharge from 100 % to a 0 % of energy in the battery</td>
+</tr>
+<tr class="row-odd"><td>BatteryInvesmentCost</td>
+<td>USD/Wh</td>
+<td>Investment cost to install a Wh of batteries</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="diesel-generator-parameters">
+<h3>Diesel generator parameters<a class="headerlink" href="#diesel-generator-parameters" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="7%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GeneratorEfficiency</td>
+<td>%</td>
+<td>Generator efficiency to transform heat into electricity</td>
+</tr>
+<tr class="row-odd"><td>LowHeatingValue</td>
+<td>W/L</td>
+<td>Low heating value of the diesel</td>
+</tr>
+<tr class="row-even"><td>DieselCost</td>
+<td>USD/L</td>
+<td>Diesel cost</td>
+</tr>
+<tr class="row-odd"><td>GeneratorInvesmentCost</td>
+<td>USD/W</td>
+<td>Investment cost to install a diesel generator</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="energy-balance-parameters">
+<h3>Energy balance parameters<a class="headerlink" href="#energy-balance-parameters" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="7%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>EnergyDemand (t)</td>
+<td>W</td>
+<td>The total energy demand of the system</td>
+</tr>
+<tr class="row-odd"><td>LostLoadProbability</td>
+<td>%</td>
+<td>The percentage of the demand that the micro-grid has to provide</td>
+</tr>
+<tr class="row-even"><td>ValueOfLostLoad</td>
+<td>USD/W</td>
+<td>The price of the load that is not supply to the system</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="project-parameters">
+<h3>Project parameters<a class="headerlink" href="#project-parameters" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="5%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Periods</td>
+<td>Hours</td>
+<td>Number of periods of the year</td>
+</tr>
+<tr class="row-odd"><td>Years</td>
+<td>Years</td>
+<td>Number of years in the project</td>
+</tr>
+<tr class="row-even"><td>DeltaTime</td>
+<td>Hours</td>
+<td>Time step of the analysis of the energy flow</td>
+</tr>
+<tr class="row-odd"><td>PorcentageFunded</td>
+<td>%</td>
+<td>Percentage of the total investment that is Funded by a bank or another entity</td>
+</tr>
+<tr class="row-even"><td>MaintenanceOperationCostPV</td>
+<td>%</td>
+<td>Percentage of the total investment spend in operation and management of PV</td>
+</tr>
+<tr class="row-odd"><td>MaintenanceOperationCostBattery</td>
+<td>%</td>
+<td>Percentage of the total investment spend in operation and management of the battery</td>
+</tr>
+<tr class="row-even"><td>MaintenanceOperationCostGenerator</td>
+<td>%</td>
+<td>Percentage of the total investment spend in operation and management of the genset</td>
+</tr>
+<tr class="row-odd"><td>DiscountRate</td>
+<td>%</td>
+<td>Discount rate of the project</td>
+</tr>
+<tr class="row-even"><td>InterestRate</td>
+<td>%</td>
+<td>Interest rate of the loan</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pv-variables">
+<h3>PV variables<a class="headerlink" href="#pv-variables" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="9%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>PVUnits</td>
+<td>unit</td>
+<td>Number of installed PV</td>
+</tr>
+<tr class="row-odd"><td>TotalEnergyPV (t)</td>
+<td>Wh</td>
+<td>Energy generated for all the PVs in the system</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="battery-variables">
+<h3>Battery variables<a class="headerlink" href="#battery-variables" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="9%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>BatteryNominalCapacity</td>
+<td>Wh</td>
+<td>Nominal capacity of the battery bank</td>
+</tr>
+<tr class="row-odd"><td>EnergyBatteryDischarge (t)</td>
+<td>Wh</td>
+<td>Energy that flows out of the battery</td>
+</tr>
+<tr class="row-even"><td>EnergyBatteryCharge (t)</td>
+<td>Wh</td>
+<td>Energy that flows in to the battery</td>
+</tr>
+<tr class="row-odd"><td>StateOfChargeBattery (t)</td>
+<td>Wh</td>
+<td>Energy inside the battery</td>
+</tr>
+<tr class="row-even"><td>MaximunChargePower</td>
+<td>W</td>
+<td>Maximum charge power</td>
+</tr>
+<tr class="row-odd"><td>MaximunDischargePower</td>
+<td>W</td>
+<td>Maximum discharge power</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="diesel-generator-variables">
+<h3>Diesel generator variables<a class="headerlink" href="#diesel-generator-variables" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="9%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GeneratorNominal_Capacit</td>
+<td>W</td>
+<td>Nominal capacity of the diesel generator</td>
+</tr>
+<tr class="row-odd"><td>DieselConsumed (t)</td>
+<td>L</td>
+<td>Diesel consumed to produce energy</td>
+</tr>
+<tr class="row-even"><td>GeneratorEnergy (t)</td>
+<td>Wh</td>
+<td>Energy produced by the diesel generator</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="energy-balance-variables">
+<h3>Energy balance variables<a class="headerlink" href="#energy-balance-variables" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="9%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>LostLoad (t)</td>
+<td>Wh</td>
+<td>Energy not supply by the system</td>
+</tr>
+<tr class="row-odd"><td>EnergyCurtailment (t)</td>
+<td>Wh</td>
+<td>Curtailment of solar energy</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="project-variables">
+<h3>Project variables<a class="headerlink" href="#project-variables" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="9%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>FinancialCost</td>
+<td>USD</td>
+<td>Financial cost</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="modeling-of-the-system">
+<h2>Modeling of the system<a class="headerlink" href="#modeling-of-the-system" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="objective-function">
+<h2>Objective function<a class="headerlink" href="#objective-function" title="Permalink to this headline">¶</a></h2>
+<p>The objective function will be to minimize the Net Present Cost (NPC) for n years. With the INV being the total investment, TCP as the total cost of the period.</p>
+<div class="math">
+<p><img src="_images/math/ad9910942e362d301a2c87b631f1009b2fcbc314.png" alt="NPC = INV + \sum _n\frac{\mathit{TCP}_n} {(1+ DiscountRate)^n}"/></p>
+</div><p>The total investment equation is:</p>
+<div class="math">
+<p><img src="_images/math/fd9b335f56a66528523d2461331482ac9b20023d.png" alt="INV = (PVinvestmentCost \cdot PVNominalCapacity \cdot PVUnits + BatteryNominalCapacity \cdot BatteryInvestmentCost
+
++ GeneratorInvestmentCost \cdot GeneratorNominalCapacity  ) \cdot (1 - PorcentageFunded)"/></p>
+</div><p>The Total cost of the period is composed by operation and maintenance cost (OM), the financial cost, the replacement cost (ReplacementCost)and the total cost of the diesel in the periods (DieselCost):</p>
+<div class="math">
+<p><img src="_images/math/b8947e6fb180928bbe955da94464c2647fb221ae.png" alt="\mathit{TCP}_n = OM + FinancialCost + \mathit{ReplacementCost}_n + \mathit{DieselCost}_n"/></p>
+</div><p>The OM is stated by:</p>
+<div class="math">
+<p><img src="_images/math/aa3a1861f6ece5b184900a5cfc1dd91378474627.png" alt="OM = PVinvesmentCost \cdot PVNominalCapacity \cdot PVUnits \cdot MaintenanceOperationCostPV
+
++ BatteryNominalCapacity \cdot BatteryInvesmentCost  \cdot MaintenanceOperationCostBattery
+
++ GeneratorInvesmentCost \cdot GeneratorNominalCapacity  \cdot MaintenanceOperationCostGenerator"/></p>
+</div><p>The financial cost is a fix amount, that is payed each period to pay the loan acquire to finance a percentage of the initial investment and is calculated with the following equation:</p>
+<div class="math">
+<p><img src="_images/math/ce822d5370e95a83e8372fd1d0f175b4123ecc1b.png" alt="FinancialCost = \frac{INV \cdot PorcentageFunded \cdot InterestRate} {1 - (1 + InterestRate)^{-Years}}"/></p>
+</div><p>The replacement cost is given by the fallowing equation:</p>
+<div class="math">
+<p><img src="_images/math/bc75a284f37cf5418685dd19d624b2f969318305.png" alt="\mathit{ReplacementCost}_{10} = \frac{BatteryNominalCapacity \cdot BatteryInvesmentCost} {(1+ DiscountRate)^{10}}"/></p>
+</div><p>Finally the Diesel cost is calculated by:</p>
+<div class="math">
+<p><img src="_images/math/60b3466b388905e7f8e18f6a48dd726c61a4151b.png" alt="\mathit{DieselCost}_n = \sum _t\mathit{DieselConsumed}_t \cdot DieselCost"/></p>
+</div><div class="section" id="pv-model">
+<h3>PV model<a class="headerlink" href="#pv-model" title="Permalink to this headline">¶</a></h3>
+<p>The equation that model the PV array energy yield is given by:</p>
+<div class="math">
+<p><img src="_images/math/00a9b94ca54048971a85b06fb7a044d5452d8f4f.png" alt="\mathit{TotalEnergyPV}_t = \mathit{PVEnergyProduction}_t \cdot \mathit{InverterEfficiency} \cdot \mathit{PVUnits}"/></p>
+</div></div>
+<div class="section" id="diesel-generator">
+<h3>Diesel generator<a class="headerlink" href="#diesel-generator" title="Permalink to this headline">¶</a></h3>
+<p>The fuel consumption is modeled by:</p>
+<div class="math">
+<p><img src="_images/math/ab68bf00153a7292995191b275b59bbfada9a47d.png" alt="\mathit{DieselConsumed}_t = \mathit{GeneratorEnergy}_t / (\mathit{GeneratorEfficiency} \cdot \mathit{LowHeatingValue})"/></p>
+</div><p>In order to ensure that the generator will not exceed his capacity the fallowing constraint is added to the model:</p>
+<div class="math">
+<p><img src="_images/math/01727c6975241ee8d9bf2792f9457adce28a6e74.png" alt="\mathit{GeneratorNominalCapacity} \cdot \mathit{DeltaTime} \geq \mathit{GeneratorEnergy}_t"/></p>
+</div></div>
+<div class="section" id="battery-bank">
+<h3>Battery bank<a class="headerlink" href="#battery-bank" title="Permalink to this headline">¶</a></h3>
+<p>The state of charge of the battery is modeled by:</p>
+<div class="math">
+<p><img src="_images/math/50f08e21db09f9c742a44344fea0bba6834d19bc.png" alt="t=1:
+
+\mathit{StateOfChargeBattery}_1 = BatteryNominalCapacity - \mathit{EnergyBatteryCharge}_1 \cdot  \mathit{ChargeBatteryEfficiency}
+
+- \mathit{EnergyBatteryDischarge}_1 \cdot  \mathit{DischargeBatteryEfficiency}"/></p>
+</div><div class="math">
+<p><img src="_images/math/120cb0ce54c6bd0149ba0f9d8c505ee56352fa36.png" alt="t&gt;1:
+
+\mathit{StateOfChargeBattery}_t = BatteryNominalCapacity - \mathit{EnergyBatteryCharge}_t \cdot  \mathit{ChargeBatteryEfficiency}
+
+- \mathit{EnergyBatteryDischarge}_t \cdot  \mathit{DischargeBatteryEfficiency}"/></p>
+</div><p>In this equations is important to highlight that in the period 1 the stated of charge of the batterie is equal to the total capacity of the battery.</p>
+<p>In order to ensure the durability of the battery a minimum depth of discharge (%) and maximum charge are establish as a constraint:</p>
+<div class="math">
+<p><img src="_images/math/d4ef9787b89093c1609c63ce8ea4f14038753485.png" alt="BatteryNominalCapacity \cdot DeepOfDischarge \leq \mathit{StateOfChargeBattery}_t \leq BatteryNominalCapacity"/></p>
+</div><p>The maximum power of charge and discharge are modeled as follow:</p>
+<div class="math">
+<p><img src="_images/math/24c5fe8b34047e6f92752924dd35483ed4eee9cd.png" alt="MaximunChargePower = BatteryNominalCapacity/MaximunBatteryChargeTime
+
+MaximunDischargePower = BatteryNominalCapacity/MaximunBatteryDischargeTime"/></p>
+</div><p>The flow of energy is into and out of the battery is restricted by:</p>
+<div class="math">
+<p><img src="_images/math/4a011b297e77bf550651298c9cd882cca0f66ddd.png" alt="\mathit{EnergyBatteryCharge}_t \geq - MaximunChargePower \cdot DeltaTime
+
+\mathit{EnergyBatteryDischarge}_t \leq MaximunDischargePower \cdot DeltaTime"/></p>
+</div></div>
+<div class="section" id="energy-constraints">
+<h3>Energy constraints<a class="headerlink" href="#energy-constraints" title="Permalink to this headline">¶</a></h3>
+<p>In order to ensure a perfect match between generation and demand, an energy balance is created as a constraint.</p>
+<div class="math">
+<p><img src="_images/math/40f674ab3a2dd0f6a67ccde9271050763d9b92e6.png" alt="\mathit{EnergyDemand}_t = \mathit{TotalEnergyPV}_t + \mathit{DieselConsumed}_t + \mathit{EnergyBatteryCharge}_t
+
++ \mathit{EnergyBatteryDischarge}_t + \mathit{EnergyCurtailment}_t + \mathit{LostLoad}_t"/></p>
+</div><p>This constraint is used to ensure that a percentage of the demand will always be supply and is express as follow:</p>
+<div class="math">
+<p><img src="_images/math/1086fc5a9dc142faddaf51982fc51a320a3fee3d.png" alt="LostLoadProbability =  \frac{\sum _t\mathit{LostLoad}_t} {\sum _t\mathit{EnergyDemand}_t}"/></p>
+</div></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="API.html" class="btn btn-neutral float-right" title="API Documentation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Overview.html" class="btn btn-neutral" title="Overview" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Sergio Balderrama, Sylvain Quoilin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
