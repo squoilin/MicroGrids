@@ -1,4 +1,4 @@
-Self-Consumption Toolbox
+Micro-Grids
 ========================
 
 ### Description
