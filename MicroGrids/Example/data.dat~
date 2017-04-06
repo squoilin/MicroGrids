@@ -2,15 +2,17 @@ param: Periods := 8760;
 
 param: Years := 20;
 
-param: StartDate := '01/01/2014 01:00:00';
+param: StartDate := '01/01/2011 00:00:00';
 
 param: PlotTime := 5;
 
-param: PlotDay := '09/15/2014 01:00:00';
+param: PlotDay := '09/02/2011 01:00:00';
 
-param: Delta_Time := 1;
+param: PlotScenario := 1;
 
-param: PV_invesment_Cost := 1.66666666666666667;
+param: Delta_Time := 1.0;
+
+param: PV_invesment_Cost := 1.5;
 
 param: Battery_Invesment_Cost := 0.6;
 
@@ -22,7 +24,7 @@ param: Maintenance_Operation_Cost_Battery:= 0.015;
 
 param: Maintenance_Operation_Cost_Generator := 0.015;
 
-param: Diesel_Cost := 1.18;
+param: Diesel_Unitary_Cost := 1.18;
 
 param: Discount_Rate := 0.12;
 
@@ -42,16 +44,26 @@ param: Generator_Efficiency := 0.337040782;
 
 param: Low_Heating_Value := 9890;
 
-param: Value_Of_Lost_Load := 0.18;
+param: Value_Of_Lost_Load := 0.0003;
 
 param: Porcentage_Funded := 0.55;
 
-param: Maximun_Battery_Discharge_Time := 5;
+param: Maximun_Battery_Discharge_Time := 1;
 
-param: Maximun_Battery_Charge_Time := 5;
+param: Maximun_Battery_Charge_Time := 1;
 
 param: PV_Nominal_Capacity := 300;
 
 param: Battery_Reposition_Time := 10;
+
+param: Scenarios :=3;
+
+param: Scenario_Weight :=
+
+1   0.34
+2   0.33
+3   0.33;
+
+
 
 

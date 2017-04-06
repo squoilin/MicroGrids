@@ -2,7 +2,6 @@
 import pandas as pd
 
 def Initialize_years(model, i):
-
     '''
     This function returns the value of each year of the project. 
     
@@ -14,20 +13,19 @@ def Initialize_years(model, i):
 
 Energy_Demand = pd.read_excel('Example/Demand.xls') # open the energy demand file
 
-def Initialize_Demand(model, i):
+def Initialize_Demand(model, i, t):
     '''
     This function returns the value of the energy demand from a system for each period of analysis from a excel file.
     
     :param model: Pyomo model as defined in the Model_Creation script.
         
-    :return: The energy demand for the period t.     
-        
+    :return: The energy demand for the period t.            
     '''
-    return float(Energy_Demand.Demand[i])
+    return float(Energy_Demand[i][t])
 
 PV_Energy = pd.read_excel('Example/PV_Energy.xls') # open the PV energy yield file
 
-def Initialize_PV_Energy(model, i):
+def Initialize_PV_Energy(model, i, t):
     '''
     This function returns the value of the energy yield by one PV under the characteristics of the system 
     analysis for each period of analysis from a excel file.
@@ -36,5 +34,5 @@ def Initialize_PV_Energy(model, i):
     
     :return: The energy yield of one PV for the period t.
     '''
-    return float(PV_Energy.Energy[i])
+    return float(PV_Energy[i][t])
     

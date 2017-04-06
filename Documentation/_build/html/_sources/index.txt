@@ -14,16 +14,18 @@ Welcome to Micro-Grids's documentation!
 :Date: |today|
 
 
-The world is currently undergoing a drastic change of the energy matrix from conventional sources of energy to renewable and alternative ones. This trend is particularly relevant in the challenge of rural electrification in developing countries because in some cases the levelized cost of electricity (LCOE) of hybrid or renewable systems can be competitive with the extension of the main grid in order to supply the energy demand of isolated communities [1].  To this aim, optimization techniques fulfill a key role in differents aspects of micro-grid planning and operating procedure in order to reduce the LCOE for a determined micro-grid [2].  
+The world is currently undergoing a drastic change of the energy matrix from conventional sources of energy to renewable and alternative ones. This trend is particularly relevant in the challenge of rural electrification in developing countries because in some cases the levelized cost of electricity (LCOE) of hybrid or renewable systems can be competitive with the extension of the main grid in order to supply the energy demand of isolated communities [1].  However, exploiting solar energy for off-grid rural electrification faces some major challenges, especially due to the stochastic nature of the solar resource and eventual electricity demand (viz.load profile). These can have a serious impact on the sizing of the micro-grid, and the stability and reliability of the energy supply. In addition, as analysed in [2-3], an insightful analysis on how the electrification process impacts the electricity-user’s behaviour is generally lacking when planning a
+micro-grid, as well as a generalized underestimation of the social aspect during the design phase.To this aim, optimization techniques fulfill a key role in differents aspects of micro-grid planning and operating procedure in order to reduce the LCOE for a determined micro-grid [4].  
 
 The Micro-Grid library main objective is to provide an open source alternative to the problem of sizing and dispatch of energy in micro-grids in isolated places. It's written in python(pyomo) and use excel and text files as input and output data handling and visualization.
 
 Main features:
 
+* Robust optimization
 * Optimal sizing of Lion-Ion batteries, diesel generators and PV panels in order to supply a demand with the lowest cost possible.
 * Optimal dispatch from different energy sources.
 * Calculation of the net present cost of the system for the project lifetime.
-* Determination of the LCOE for the optimal system.
+* Determination of the LCOE for the optimal system1.
 
 Contents
 ========
@@ -57,8 +59,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 
 References
 ----------
-.. [1]  Nguyen K., Alternatives to grid extension for rural electrification: Decentralized renewable energy technologies in Vietnam. Energy Policy 2007; 35:2579-2589.
-.. [2] Gamarra C., Guerrero J., Computational optimization techniques applied to microgrids planning: A review. Renewable and Sustainable Energy Reviews 2015; 48:413-424.
+.. [1] Nguyen K., Alternatives to grid extension for rural electrification: Decentralized renewable energy technologies in Vietnam. Energy Policy 2007; 35:2579-2589.
+.. [2] Murphy T., Making the energy transition in rural East Africa: Is leapfrogging an alternative? Technological Forecasting & Social Change 2001; 68: 173-193.
+.. [3] Madubansi M, Shackleton C.M., Changing energy profiles and consumption patterns following electrification in five rural villages, South Africa. Energy Policy 2006; 34: 4081-4092.
+.. [4] Gamarra C., Guerrero J., Computational optimization techniques applied to microgrids planning: A review. Renewable and Sustainable Energy Reviews 2015; 48:413-424.
 
 .. _matplotlib: http://matplotlib.org
 .. _pandas: http://pandas.pydata.org

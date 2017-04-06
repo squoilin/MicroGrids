@@ -11,7 +11,7 @@ The MicroGrid library can be use in Linux or windows and needs different program
 Python
 ~~~~~~
 
-First of all Micro-Grids needs Python 2.7.10 install in the computer. The easiest way to obtain it, is download `anaconda`_ in order to have all the tools needed to run python scripts.
+First of all Micro-Grids needs Python 3 install in the computer. The easiest way to obtain it, is download `anaconda`_ in order to have all the tools needed to run python scripts.
 
 Python libraries
 ~~~~~~~~~~~~~~~~
@@ -63,19 +63,23 @@ This file has to contain all the parameters for the Micro-Grids library to be ab
 Name of the parameter               Ampl format                                             Observation
 ==================================  ======================================================  ===================================================
 Stardate			    param: StartDate := '01/01/2014 01:00:00';              month/day/year hour:minute:second
-PlotTime                            param: PlotTime := 1;			            Can be more than 1 
+PlotTime                            param: PlotTime := 1;			            The number of days to be plot
 PlotDay                             param: PlotDay := '02/01/2014 01:00:00';                month/day/year hour:minute:second
+PlotScenario			    param: PlotScenario := 2;				    The scenario to be ploted 
+Delta_Time      		    param: Delta_Time := 1.0;				    Duration of the periods
 PVNominalCapacity		    param: PV_Nominal_Capacity := 300;
 PVinvesmentCost 		    param: PV_invesment_Cost := 1.6667;
+InverterEfficiency		    param: Inverter_Efficiency := 0.986;
 ChargeBatteryEfficiency             param: Charge_Battery_Efficiency := 0.95;
 DischargeBatteryEfficiency          param: Discharge_Battery_Efficiency := 0.95;
 DeepOfDischarge                     param: Deep_of_Discharge := 0.2;			    Between 0 a 1
 MaximunBatteryChargeTime            param: Maximun_Battery_Charge_Time := 5;
 MaximunBatteryDischargeTime         param: Maximun_Battery_Discharge_Time := 5;
 BatteryInvesmentCost                param: Battery_Invesment_Cost := 0.6;  
+N				    param: Battery_Reposition_Time := 10;
 GeneratorEfficiency                 param: Generator_Efficiency := 0.337040782;
 LowHeatingValue                     param: Low_Heating_Value := 9890;                       It depends on the fuel used
-DieselCost                          param: Diesel_Cost := 1.18;                        
+DieselCost                          param: Diesel_Unitary_Cost := 1.18;                        
 GeneratorInvesmentCost              param: Generator_Invesment_Cost := 1.48;
 LostLoadProbability		    param: Lost_Load_Probability := 0.00;                   Between 0 and 1
 ValueOfLostLoad	                    param: Value_Of_Lost_Load := 0.18;
@@ -87,11 +91,12 @@ MaintenanceOperationCostBattery     param: Maintenance_Operation_Cost_Battery:= 
 MaintenanceOperationCostGenerator   param: Maintenance_Operation_Cost_Generator := 0.015;
 DiscountRate                        param: Discount_Rate := 0.12;
 InterestRate                        param: Interest_Rate_Loan := 0.06;
+s			            param: Scenarios :=3;
 ==================================  ======================================================  ===================================================
 
 This file must be save inside the folder "Inputs". An example can be downloaded in the fallowing link:
 
-
+https://github.com/squoilin/MicroGrids/tree/master/MicroGrids/Example
 
 Demand.xls file
 ~~~~~~~~~~~~~~~
@@ -102,24 +107,25 @@ The Demand.xls file has to have the energy demand of the system in each period o
 
 This file must be save inside the folder "Inputs". An example can be downloaded in the fallowing link:
 
-
+https://github.com/squoilin/MicroGrids/tree/master/MicroGrids/Example
 
 PV_Energy.xls
 ~~~~~~~~~~~~~
 
-The PV_Energy.xls file has to have the energy yield for one PV in each period of analysis. The excel file must have a column with the periods and another with energy yield in W as shown in the following figure.
+The PV_Energy.xls file has to have the energy yield for one PV in each period of analysis. The excel file must have a column with the periods and the number of columns equal to the number of scenarios energy yield in W as shown in the following figure.
 
 .. image:: /images/PV_Energy.png
 
 This file must be save inside the folder "Inputs". An example can be downloaded in the fallowing link:
+
+https://github.com/squoilin/MicroGrids/tree/master/MicroGrids/Example
 
 Run Micro-Grids library
 -----------------------
 
 Once all the above steps are performed, the easiest way to run the Micro-grids library is opening the Micro-Grids.py file in an development environment like spider and run the script inside it. Another way is to open a terminal in the folder where all the scripts are and use the following command:
 
-
-python Micro-Grids
+python Micro-Grids.py
 
 Outputs
 -------
@@ -130,8 +136,9 @@ After the optimization is finish a message will appear with the Levelized cost o
 ===============================  =============  ===============================================================================================
 Name of the file                 type of file   Description                       
 ===============================  =============  ===============================================================================================
-Size.xls                         Txt file 	Contains the nominal capacities of the PV, Battery, Diesel generator and the NPV of the system
+Size.xls                         Txt file 	Contains the nominal capacities of the PV, Battery, Diesel generator and other information
 Time_series.xls			 Excel file	Contains the the energy flow in each period for all the energy variables and the diesel consume
+Scenario_Information.xls	 Excel file     Contains some information of the scenarios	
 Energy_flow.png			 Excel file	Contains the Figure of the energy flow from the 'PlotDay' during for 'PlotTime' days
 ===============================  =============  ===============================================================================================
 

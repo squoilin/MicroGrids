@@ -161,7 +161,7 @@
 <span id="initialize-parameters"></span><h2>Initialize parameters<a class="headerlink" href="#module-Initialize" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="Initialize.Initialize_Demand">
-<code class="descclassname">Initialize.</code><code class="descname">Initialize_Demand</code><span class="sig-paren">(</span><em>model</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#Initialize.Initialize_Demand" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">Initialize.</code><code class="descname">Initialize_Demand</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Initialize.Initialize_Demand" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function returns the value of the energy demand from a system for each period of analysis from a excel file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -177,7 +177,7 @@
 
 <dl class="function">
 <dt id="Initialize.Initialize_PV_Energy">
-<code class="descclassname">Initialize.</code><code class="descname">Initialize_PV_Energy</code><span class="sig-paren">(</span><em>model</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#Initialize.Initialize_PV_Energy" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">Initialize.</code><code class="descname">Initialize_PV_Energy</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Initialize.Initialize_PV_Energy" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function returns the value of the energy yield by one PV under the characteristics of the system 
 analysis for each period of analysis from a excel file.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -231,10 +231,40 @@ analysis for each period of analysis from a excel file.</p>
 <div class="section" id="module-Constraints">
 <span id="constraints"></span><h2>Constraints<a class="headerlink" href="#module-Constraints" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
+<dt id="Constraints.Battery_Reposition_Cost">
+<code class="descclassname">Constraints.</code><code class="descname">Battery_Reposition_Cost</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Battery_Reposition_Cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>This funtion calculate the reposition of the battery after a stated time of use.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> &#8211; Pyomo model as defined in the Model_creation library.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="Constraints.Diesel_Comsuption">
-<code class="descclassname">Constraints.</code><code class="descname">Diesel_Comsuption</code><span class="sig-paren">(</span><em>model</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Diesel_Comsuption" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint transforms the energy produce by the diesel generator in to liters of diesel.This  
-is done using the low heating value of the diesel and the efficiency of the diesel generator.</p>
+<code class="descclassname">Constraints.</code><code class="descname">Diesel_Comsuption</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Diesel_Comsuption" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint transforms the energy produce by the diesel generator in to 
+liters of diesel in each scenario i.This is done using the low heating value
+of the diesel and the efficiency of the diesel generator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> &#8211; Pyomo model as defined in the Model_creation library.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Constraints.Diesel_Cost_Total">
+<code class="descclassname">Constraints.</code><code class="descname">Diesel_Cost_Total</code><span class="sig-paren">(</span><em>model</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Diesel_Cost_Total" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint calculate the total cost due to the used of diesel to generate 
+electricity in the generator in each scenario i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -247,9 +277,9 @@ is done using the low heating value of the diesel and the efficiency of the dies
 
 <dl class="function">
 <dt id="Constraints.Energy_balance">
-<code class="descclassname">Constraints.</code><code class="descname">Energy_balance</code><span class="sig-paren">(</span><em>model</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Energy_balance" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">Constraints.</code><code class="descname">Energy_balance</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Energy_balance" title="Permalink to this definition">¶</a></dt>
 <dd><p>This constraint ensures the perfect match between the energy energy demand of the 
-system and the differents sources to meet the energy demand.</p>
+system and the differents sources to meet the energy demand each scenario i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -263,7 +293,21 @@ system and the differents sources to meet the energy demand.</p>
 <dl class="function">
 <dt id="Constraints.Financial_Cost">
 <code class="descclassname">Constraints.</code><code class="descname">Financial_Cost</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Financial_Cost" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint calculated the yearly payment for the borrow money.</p>
+<dd><p>This constraint calculate the yearly payment for the borrow money.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> &#8211; Pyomo model as defined in the Model_creation library.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Constraints.Initial_Inversion">
+<code class="descclassname">Constraints.</code><code class="descname">Initial_Inversion</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Initial_Inversion" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint calculate the initial inversion for the system.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -276,8 +320,9 @@ system and the differents sources to meet the energy demand.</p>
 
 <dl class="function">
 <dt id="Constraints.Max_Bat_in">
-<code class="descclassname">Constraints.</code><code class="descname">Max_Bat_in</code><span class="sig-paren">(</span><em>model</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Max_Bat_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint maintains the energy in to the battery, below the maximum power of charge of the battery.</p>
+<code class="descclassname">Constraints.</code><code class="descname">Max_Bat_in</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Max_Bat_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint maintains the energy in to the battery, below the maximum power 
+of charge of the battery for each scenario i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -290,8 +335,9 @@ system and the differents sources to meet the energy demand.</p>
 
 <dl class="function">
 <dt id="Constraints.Max_Bat_out">
-<code class="descclassname">Constraints.</code><code class="descname">Max_Bat_out</code><span class="sig-paren">(</span><em>model</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Max_Bat_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint maintains the energy from the battery, below the maximum power of discharge of the battery.</p>
+<code class="descclassname">Constraints.</code><code class="descname">Max_Bat_out</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Max_Bat_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint maintains the energy from the battery, below the maximum power of 
+discharge of the battery for each scenario i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -306,7 +352,8 @@ system and the differents sources to meet the energy demand.</p>
 <dt id="Constraints.Max_Power_Battery_Charge">
 <code class="descclassname">Constraints.</code><code class="descname">Max_Power_Battery_Charge</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Max_Power_Battery_Charge" title="Permalink to this definition">¶</a></dt>
 <dd><p>This constraint calculates the Maximum power of charge of the battery. Taking in account the 
-capacity of the battery and a time frame in which the battery has to be fully loaded.</p>
+capacity of the battery and a time frame in which the battery has to be fully loaded for 
+each scenario.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -320,8 +367,8 @@ capacity of the battery and a time frame in which the battery has to be fully lo
 <dl class="function">
 <dt id="Constraints.Max_Power_Battery_Discharge">
 <code class="descclassname">Constraints.</code><code class="descname">Max_Power_Battery_Discharge</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Max_Power_Battery_Discharge" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint calculates the Maximum power of discharge of the battery. Taking in account 
-the capacity of the battery and a time frame in which the battery can be fully discharge.</p>
+<dd><p>This constraint calculates the Maximum power of discharge of the battery. for 
+each scenario i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -334,8 +381,9 @@ the capacity of the battery and a time frame in which the battery can be fully d
 
 <dl class="function">
 <dt id="Constraints.Maximun_Charge">
-<code class="descclassname">Constraints.</code><code class="descname">Maximun_Charge</code><span class="sig-paren">(</span><em>model</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Maximun_Charge" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint keeps the state of charge of the battery equal or under the size of the battery.</p>
+<code class="descclassname">Constraints.</code><code class="descname">Maximun_Charge</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Maximun_Charge" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint keeps the state of charge of the battery equal or under the 
+size of the battery for each scenario i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -348,8 +396,9 @@ the capacity of the battery and a time frame in which the battery can be fully d
 
 <dl class="function">
 <dt id="Constraints.Maximun_Diesel_Energy">
-<code class="descclassname">Constraints.</code><code class="descname">Maximun_Diesel_Energy</code><span class="sig-paren">(</span><em>model</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Maximun_Diesel_Energy" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint ensures that the generator will not exceed his nominal capacity in each period.</p>
+<code class="descclassname">Constraints.</code><code class="descname">Maximun_Diesel_Energy</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Maximun_Diesel_Energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint ensures that the generator will not exceed his nominal capacity 
+in each period in each scenario i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -362,9 +411,9 @@ the capacity of the battery and a time frame in which the battery can be fully d
 
 <dl class="function">
 <dt id="Constraints.Maximun_Lost_Load">
-<code class="descclassname">Constraints.</code><code class="descname">Maximun_Lost_Load</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Maximun_Lost_Load" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint ensures that the ratio between the lost load and the energy Energy_Demand does not 
-exceeds the value of the permisible lost load.</p>
+<code class="descclassname">Constraints.</code><code class="descname">Maximun_Lost_Load</code><span class="sig-paren">(</span><em>model</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Maximun_Lost_Load" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint ensures that the ratio between the lost load and the energy 
+Demand does not exceeds the value of the permisible lost load each scenario i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -377,8 +426,9 @@ exceeds the value of the permisible lost load.</p>
 
 <dl class="function">
 <dt id="Constraints.Minimun_Charge">
-<code class="descclassname">Constraints.</code><code class="descname">Minimun_Charge</code><span class="sig-paren">(</span><em>model</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Minimun_Charge" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint maintains the level of charge of the battery above the deep of discharge.</p>
+<code class="descclassname">Constraints.</code><code class="descname">Minimun_Charge</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Minimun_Charge" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint maintains the level of charge of the battery above the deep 
+of discharge in each scenario i.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -392,6 +442,49 @@ exceeds the value of the permisible lost load.</p>
 <dl class="function">
 <dt id="Constraints.Net_Present_Cost">
 <code class="descclassname">Constraints.</code><code class="descname">Net_Present_Cost</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Net_Present_Cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function computes the sum of the multiplication of the net present cost 
+NPC (USD) of each scenario and their probability of occurrence.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> &#8211; Pyomo model as defined in the Model_creation library.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Constraints.Operation_Maintenance_Cost">
+<code class="descclassname">Constraints.</code><code class="descname">Operation_Maintenance_Cost</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Operation_Maintenance_Cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>This funtion calculate the operation and maintenance for the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> &#8211; Pyomo model as defined in the Model_creation library.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Constraints.Scenario_Lost_Load_Cost">
+<code class="descclassname">Constraints.</code><code class="descname">Scenario_Lost_Load_Cost</code><span class="sig-paren">(</span><em>model</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Scenario_Lost_Load_Cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint calculate the cost due to the lost load in each scenario i.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> &#8211; Pyomo model as defined in the Model_creation library.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Constraints.Scenario_Net_Present_Cost">
+<code class="descclassname">Constraints.</code><code class="descname">Scenario_Net_Present_Cost</code><span class="sig-paren">(</span><em>model</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Scenario_Net_Present_Cost" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function computes the Net Present Cost for the life time of the project, taking in account that the 
 cost are fix for each year.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -406,9 +499,9 @@ cost are fix for each year.</p>
 
 <dl class="function">
 <dt id="Constraints.Solar_Energy">
-<code class="descclassname">Constraints.</code><code class="descname">Solar_Energy</code><span class="sig-paren">(</span><em>model</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Solar_Energy" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint calculates the energy produce by the solar panels taking in account the efficiency 
-of the inverter.</p>
+<code class="descclassname">Constraints.</code><code class="descname">Solar_Energy</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Solar_Energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint calculates the energy produce by the solar panels taking in 
+account the efficiency of the inverter for each scenario.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -421,10 +514,26 @@ of the inverter.</p>
 
 <dl class="function">
 <dt id="Constraints.State_of_Charge">
-<code class="descclassname">Constraints.</code><code class="descname">State_of_Charge</code><span class="sig-paren">(</span><em>model</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.State_of_Charge" title="Permalink to this definition">¶</a></dt>
-<dd><p>This constraint calculates the State of charge of the battery (State_Of_Charge) for each period 
-of analysis. The State_Of_Charge is in the period &#8216;t&#8217; is equal to the State_Of_Charge in period 
-&#8216;t-1&#8217; plus the energy flow into the battery, minus the energy flow out of the battery.</p>
+<code class="descclassname">Constraints.</code><code class="descname">State_of_Charge</code><span class="sig-paren">(</span><em>model</em>, <em>i</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.State_of_Charge" title="Permalink to this definition">¶</a></dt>
+<dd><p>This constraint calculates the State of charge of the battery (State_Of_Charge) 
+for each period of analysis. The State_Of_Charge is in the period &#8216;t&#8217; is equal to
+the State_Of_Charge in period &#8216;t-1&#8217; plus the energy flow into the battery, 
+minus the energy flow out of the battery. This is done for each scenario i.
+In time t=1 the State_Of_Charge_Battery is equal to a fully charged battery.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> &#8211; Pyomo model as defined in the Model_creation library.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Constraints.Total_Finalcial_Cost">
+<code class="descclassname">Constraints.</code><code class="descname">Total_Finalcial_Cost</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#Constraints.Total_Finalcial_Cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>This funtion calculate the total financial cost of the system.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -439,8 +548,8 @@ of analysis. The State_Of_Charge is in the period &#8216;t&#8217; is equal to th
 <div class="section" id="module-Economical_Analisis">
 <span id="economical-analisis"></span><h2>Economical analisis<a class="headerlink" href="#module-Economical_Analisis" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="Economical_Analisis.Levelizes_Cost_Of_Energy">
-<code class="descclassname">Economical_Analisis.</code><code class="descname">Levelizes_Cost_Of_Energy</code><span class="sig-paren">(</span><em>Time_Series</em>, <em>Results</em>, <em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#Economical_Analisis.Levelizes_Cost_Of_Energy" title="Permalink to this definition">¶</a></dt>
+<dt id="Economical_Analisis.Levelized_Cost_Of_Energy">
+<code class="descclassname">Economical_Analisis.</code><code class="descname">Levelized_Cost_Of_Energy</code><span class="sig-paren">(</span><em>Time_Series</em>, <em>Results</em>, <em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#Economical_Analisis.Levelized_Cost_Of_Energy" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function load the results that depend of the periods in to a dataframe</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

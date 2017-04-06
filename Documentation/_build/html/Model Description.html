@@ -183,6 +183,10 @@
 <td>t</td>
 <td>Period that are divided the years</td>
 </tr>
+<tr class="row-even"><td>Scenarios</td>
+<td>s</td>
+<td>Scenarios analalized</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -192,9 +196,9 @@
 <h3>Data analysis parameters<a class="headerlink" href="#data-analysis-parameters" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="14%" />
+<col width="17%" />
 <col width="7%" />
-<col width="78%" />
+<col width="76%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
@@ -214,6 +218,10 @@
 <tr class="row-even"><td>PlotDay</td>
 <td>Day</td>
 <td>Start date for the dispatch plot</td>
+</tr>
+<tr class="row-odd"><td>PlotScenario</td>
+<td>&nbsp;</td>
+<td>Scenario to be plot</td>
 </tr>
 </tbody>
 </table>
@@ -245,9 +253,9 @@
 <td>USD/W</td>
 <td>Investment Cost to install PV panels</td>
 </tr>
-<tr class="row-odd"><td>PVEnergyProduction (t)</td>
+<tr class="row-odd"><td>PVEnergyProduction</td>
 <td>Wh</td>
-<td>The yield of energy of one PV unit in the period t</td>
+<td>The yield of energy of one PV unit in the period (i,t)</td>
 </tr>
 </tbody>
 </table>
@@ -290,6 +298,10 @@
 <tr class="row-odd"><td>BatteryInvesmentCost</td>
 <td>USD/Wh</td>
 <td>Investment cost to install a Wh of batteries</td>
+</tr>
+<tr class="row-even"><td>BatteryRepostionTime</td>
+<td>Years</td>
+<td>Time for the remplacement of the battery</td>
 </tr>
 </tbody>
 </table>
@@ -343,9 +355,9 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>EnergyDemand (t)</td>
+<tr class="row-even"><td>EnergyDemand (s,t)</td>
 <td>W</td>
-<td>The total energy demand of the system</td>
+<td>The total energy demand of the system for each scenario.</td>
 </tr>
 <tr class="row-odd"><td>LostLoadProbability</td>
 <td>%</td>
@@ -409,6 +421,14 @@
 <td>%</td>
 <td>Interest rate of the loan</td>
 </tr>
+<tr class="row-odd"><td>ProbalityOccurrence     (s)</td>
+<td>%</td>
+<td>Probability of occurrence of each scenario</td>
+</tr>
+<tr class="row-even"><td>N</td>
+<td>Years</td>
+<td>Years of duration of the project</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -419,9 +439,9 @@
 <h3>PV variables<a class="headerlink" href="#pv-variables" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="34%" />
-<col width="9%" />
-<col width="58%" />
+<col width="30%" />
+<col width="8%" />
+<col width="62%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
@@ -434,9 +454,13 @@
 <td>unit</td>
 <td>Number of installed PV</td>
 </tr>
-<tr class="row-odd"><td>TotalEnergyPV (t)</td>
+<tr class="row-odd"><td>TotalEnergyPV (s,t)</td>
 <td>Wh</td>
-<td>Energy generated for all the PVs in the system</td>
+<td>Energy generated for all the PVs in the system in each scenario</td>
+</tr>
+<tr class="row-even"><td>OyMCostPV</td>
+<td>USD</td>
+<td>Cost of the OyM of the PV during the life time of the proyect</td>
 </tr>
 </tbody>
 </table>
@@ -460,17 +484,17 @@
 <td>Wh</td>
 <td>Nominal capacity of the battery bank</td>
 </tr>
-<tr class="row-odd"><td>EnergyBatteryDischarge (t)</td>
+<tr class="row-odd"><td>EnergyBatteryDischarge (s,t)</td>
 <td>Wh</td>
-<td>Energy that flows out of the battery</td>
+<td>Energy that flows out of the battery in each scenario</td>
 </tr>
-<tr class="row-even"><td>EnergyBatteryCharge (t)</td>
+<tr class="row-even"><td>EnergyBatteryCharge (s,t)</td>
 <td>Wh</td>
-<td>Energy that flows in to the battery</td>
+<td>Energy that flows in to the battery in each scenario</td>
 </tr>
-<tr class="row-odd"><td>StateOfChargeBattery (t)</td>
+<tr class="row-odd"><td>StateOfChargeBattery (s,t)</td>
 <td>Wh</td>
-<td>Energy inside the battery</td>
+<td>Energy inside the battery in each scenario</td>
 </tr>
 <tr class="row-even"><td>MaximunChargePower</td>
 <td>W</td>
@@ -487,7 +511,7 @@
 <h3>Diesel generator variables<a class="headerlink" href="#diesel-generator-variables" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="34%" />
+<col width="33%" />
 <col width="9%" />
 <col width="58%" />
 </colgroup>
@@ -498,17 +522,21 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>GeneratorNominal_Capacit</td>
+<tr class="row-even"><td>GeneratorNominalCapacity</td>
 <td>W</td>
 <td>Nominal capacity of the diesel generator</td>
 </tr>
-<tr class="row-odd"><td>DieselConsumed (t)</td>
+<tr class="row-odd"><td>DieselConsumed (s,t)</td>
 <td>L</td>
 <td>Diesel consumed to produce energy</td>
 </tr>
-<tr class="row-even"><td>GeneratorEnergy (t)</td>
+<tr class="row-even"><td>GeneratorEnergy (s,t)</td>
 <td>Wh</td>
 <td>Energy produced by the diesel generator</td>
+</tr>
+<tr class="row-odd"><td>DieselCostTotal (s)</td>
+<td>USD</td>
+<td>Cost of the diesel during the life time of the project</td>
 </tr>
 </tbody>
 </table>
@@ -517,9 +545,9 @@
 <h3>Energy balance variables<a class="headerlink" href="#energy-balance-variables" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="34%" />
-<col width="9%" />
-<col width="58%" />
+<col width="32%" />
+<col width="8%" />
+<col width="59%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
@@ -528,13 +556,17 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>LostLoad (t)</td>
+<tr class="row-even"><td>LostLoad (s,t)</td>
 <td>Wh</td>
-<td>Energy not supply by the system</td>
+<td>Energy not supply by the system in each scenario</td>
 </tr>
-<tr class="row-odd"><td>EnergyCurtailment (t)</td>
+<tr class="row-odd"><td>EnergyCurtailment (s,t)</td>
 <td>Wh</td>
-<td>Curtailment of solar energy</td>
+<td>Curtailment of solar energy in each scenario</td>
+</tr>
+<tr class="row-even"><td>LostLoadCostTotal (s)</td>
+<td>USD</td>
+<td>Cost of the Lost load during the life time of the project</td>
 </tr>
 </tbody>
 </table>
@@ -543,9 +575,9 @@
 <h3>Project variables<a class="headerlink" href="#project-variables" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="34%" />
-<col width="9%" />
-<col width="58%" />
+<col width="26%" />
+<col width="7%" />
+<col width="67%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
@@ -556,7 +588,27 @@
 <tbody valign="top">
 <tr class="row-even"><td>FinancialCost</td>
 <td>USD</td>
-<td>Financial cost</td>
+<td>Annual constant payment for the loan adquire to finance the project</td>
+</tr>
+<tr class="row-odd"><td>ScenarioNetPresentCost</td>
+<td>USD</td>
+<td>Net present cost of each scenario</td>
+</tr>
+<tr class="row-even"><td>InitialInversion</td>
+<td>USD</td>
+<td>Value of the inital inversion of the project</td>
+</tr>
+<tr class="row-odd"><td>OyMCost</td>
+<td>USD</td>
+<td>Total cost of the Operation and maintenence during the life time of the project</td>
+</tr>
+<tr class="row-even"><td>FinancialCostTotal</td>
+<td>USD</td>
+<td>Total cost of the payment for the loan during the life time of the project</td>
+</tr>
+<tr class="row-odd"><td>BatteryRepositionCost</td>
+<td>USD</td>
+<td>Cost for the reposition of the battery</td>
 </tr>
 </tbody>
 </table>
@@ -567,67 +619,73 @@
 </div>
 <div class="section" id="objective-function">
 <h2>Objective function<a class="headerlink" href="#objective-function" title="Permalink to this headline">¶</a></h2>
-<p>The objective function will be to minimize the Net Present Cost (NPC) for n years. With the INV being the total investment, TCP as the total cost of the period.</p>
+<p>The objective function will minimize the sum of the multiplication of the net present cost of each scenario and their probability of occurrence.</p>
 <div class="math">
-<p><img src="_images/math/ad9910942e362d301a2c87b631f1009b2fcbc314.png" alt="NPC = INV + \sum _n\frac{\mathit{TCP}_n} {(1+ DiscountRate)^n}"/></p>
+<p><img src="_images/math/b4992941f3dd06d2bf46245be0949a1b207b5a8e.png" alt="Objective Funtion = \sum _s\mathit{ScenarioNetPresentCost}_s  \cdot \mathit{ProbalityOccurrence}_s"/></p>
+</div><p>The net present cost of each scenario is computed with the following equation:</p>
+<div class="math">
+<p><img src="_images/math/196bae091512dfa9cf7ca1d6e0115a008e34a5cb.png" alt="\mathit{ScenarioNetPresentCost}_s = InitialInversion + OyMCost + FinancialCostTotal
+
+        + BatteryRepositionCost + \mathit{DieselCostTotal}_s + \mathit{LostLoadCostTotal}_s"/></p>
 </div><p>The total investment equation is:</p>
 <div class="math">
-<p><img src="_images/math/fd9b335f56a66528523d2461331482ac9b20023d.png" alt="INV = (PVinvestmentCost \cdot PVNominalCapacity \cdot PVUnits + BatteryNominalCapacity \cdot BatteryInvestmentCost
+<p><img src="_images/math/a425db348106afd4aa1ba2adcf8efc164fe25eac.png" alt="InitialInversion = (PVinvestmentCost \cdot PVNominalCapacity \cdot PVUnits +BatteryNominalCapacity \cdot BatteryInvestmentCost
 
 + GeneratorInvestmentCost \cdot GeneratorNominalCapacity  ) \cdot (1 - PorcentageFunded)"/></p>
-</div><p>The Total cost of the period is composed by operation and maintenance cost (OM), the financial cost, the replacement cost (ReplacementCost)and the total cost of the diesel in the periods (DieselCost):</p>
+</div><p>The OyMCost is calculated by the following equation:</p>
 <div class="math">
-<p><img src="_images/math/b8947e6fb180928bbe955da94464c2647fb221ae.png" alt="\mathit{TCP}_n = OM + FinancialCost + \mathit{ReplacementCost}_n + \mathit{DieselCost}_n"/></p>
-</div><p>The OM is stated by:</p>
-<div class="math">
-<p><img src="_images/math/aa3a1861f6ece5b184900a5cfc1dd91378474627.png" alt="OM = PVinvesmentCost \cdot PVNominalCapacity \cdot PVUnits \cdot MaintenanceOperationCostPV
-
-+ BatteryNominalCapacity \cdot BatteryInvesmentCost  \cdot MaintenanceOperationCostBattery
-
-+ GeneratorInvesmentCost \cdot GeneratorNominalCapacity  \cdot MaintenanceOperationCostGenerator"/></p>
+<p><img src="_images/math/8f265a2ffa3241712a0382ac7acad0ad8301bc7d.png" alt="OyMCostPV = PVinvesmentCost \cdot PVNominalCapacity \cdot PVUnits \cdot MaintenanceOperationCostPV"/></p>
+</div><div class="math">
+<p><img src="_images/math/ff5dffb507678df513b3272225fa5cfcff123433.png" alt="OyMCostBattery = BatteryNominalCapacity \cdot BatteryInvesmentCost  \cdot MaintenanceOperationCostBattery"/></p>
+</div><div class="math">
+<p><img src="_images/math/2dc6a74cf77a8dd94132b3cdde0aeac30d7f374f.png" alt="OyMCostGenerator = GeneratorInvesmentCost \cdot GeneratorNominalCapacity  \cdot MaintenanceOperationCostGenerator"/></p>
+</div><div class="math">
+<p><img src="_images/math/66b532c5dbcb71631ba82ce163ec9d29706c121b.png" alt="OyMCost = \sum _n\frac{ OyMCostPV + OyMCostBattery + OyMCostGenerator} {(1 + DiscountRate)^{n}}"/></p>
 </div><p>The financial cost is a fix amount, that is payed each period to pay the loan acquire to finance a percentage of the initial investment and is calculated with the following equation:</p>
 <div class="math">
-<p><img src="_images/math/ce822d5370e95a83e8372fd1d0f175b4123ecc1b.png" alt="FinancialCost = \frac{INV \cdot PorcentageFunded \cdot InterestRate} {1 - (1 + InterestRate)^{-Years}}"/></p>
+<p><img src="_images/math/f804939b722d25affb6900baa24378088997a99f.png" alt="FinancialCost = \frac{INV \cdot PorcentageFunded \cdot InterestRate} {1 - (1 +InterestRate)^{-N}}"/></p>
+</div><p>The total cost incurred in the lifetime of the project for the financial cost is calculated with equation:</p>
+<div class="math">
+<p><img src="_images/math/a887b1f8213d19041fd31d0b0741d4850c5d818f.png" alt="FinancialCostTotal = \sum _n\frac{FinancialCost} {(1+ DiscountRate)^{n}}"/></p>
 </div><p>The replacement cost is given by the fallowing equation:</p>
 <div class="math">
-<p><img src="_images/math/bc75a284f37cf5418685dd19d624b2f969318305.png" alt="\mathit{ReplacementCost}_{10} = \frac{BatteryNominalCapacity \cdot BatteryInvesmentCost} {(1+ DiscountRate)^{10}}"/></p>
-</div><p>Finally the Diesel cost is calculated by:</p>
+<p><img src="_images/math/4d9e763d17b33ce2a9009d492a8bbde3091a92e3.png" alt="\mathit{ReplacementCost}_{10} = \frac{BatteryNominalCapacity \cdot BatteryInvesmentCost} {(1+ DiscountRate)^{N}}"/></p>
+</div><p>The Diesel cost is calculated by:</p>
 <div class="math">
-<p><img src="_images/math/60b3466b388905e7f8e18f6a48dd726c61a4151b.png" alt="\mathit{DieselCost}_n = \sum _t\mathit{DieselConsumed}_t \cdot DieselCost"/></p>
+<p><img src="_images/math/cbd146421b1ca194894e579d3fbac9fc38305e9b.png" alt="\mathit{DieselCostTotal}_s = \sum _n\frac{\sum _t\mathit{DieselConsumed}_{s,t} \cdot DieselCost} {(1+ DiscountRate)^{n}}"/></p>
+</div><p>Finally the cost for the unmment load is calculated with the following equation:</p>
+<div class="math">
+<p><img src="_images/math/8198f28c2b27f51812dfd82287e4b855b587b2e4.png" alt="\mathit{LostLoadCostTotal}_s = \sum _n\frac{\sum _t\mathit{LostLoad}_{s,t} \cdot ValueOfLostLoad} {(1+ DiscountRate)^{n}}"/></p>
 </div><div class="section" id="pv-model">
 <h3>PV model<a class="headerlink" href="#pv-model" title="Permalink to this headline">¶</a></h3>
 <p>The equation that model the PV array energy yield is given by:</p>
 <div class="math">
-<p><img src="_images/math/00a9b94ca54048971a85b06fb7a044d5452d8f4f.png" alt="\mathit{TotalEnergyPV}_t = \mathit{PVEnergyProduction}_t \cdot \mathit{InverterEfficiency} \cdot \mathit{PVUnits}"/></p>
+<p><img src="_images/math/f356339f5825a3a7182cd3a1d86a056aeb93287c.png" alt="\mathit{TotalEnergyPV}_{s,t} = \mathit{PVEnergyProduction}_{s,t} \cdot \mathit{InverterEfficiency} \cdot \mathit{PVUnits}"/></p>
 </div></div>
 <div class="section" id="diesel-generator">
 <h3>Diesel generator<a class="headerlink" href="#diesel-generator" title="Permalink to this headline">¶</a></h3>
 <p>The fuel consumption is modeled by:</p>
 <div class="math">
-<p><img src="_images/math/ab68bf00153a7292995191b275b59bbfada9a47d.png" alt="\mathit{DieselConsumed}_t = \mathit{GeneratorEnergy}_t / (\mathit{GeneratorEfficiency} \cdot \mathit{LowHeatingValue})"/></p>
+<p><img src="_images/math/ef2c88f9abe7ecaa0f2df4e0ec262261b182fdef.png" alt="\mathit{DieselConsumed}_{s,t} = \mathit{GeneratorEnergy}_{s,t} / (\mathit{GeneratorEfficiency} \cdot \mathit{LowHeatingValue})"/></p>
 </div><p>In order to ensure that the generator will not exceed his capacity the fallowing constraint is added to the model:</p>
 <div class="math">
-<p><img src="_images/math/01727c6975241ee8d9bf2792f9457adce28a6e74.png" alt="\mathit{GeneratorNominalCapacity} \cdot \mathit{DeltaTime} \geq \mathit{GeneratorEnergy}_t"/></p>
+<p><img src="_images/math/37778cca059505c6199544eef79c1ceb97f8224f.png" alt="\mathit{GeneratorNominalCapacity} \cdot \mathit{DeltaTime} \geq \mathit{GeneratorEnergy}_{s,t}"/></p>
 </div></div>
 <div class="section" id="battery-bank">
 <h3>Battery bank<a class="headerlink" href="#battery-bank" title="Permalink to this headline">¶</a></h3>
 <p>The state of charge of the battery is modeled by:</p>
 <div class="math">
-<p><img src="_images/math/50f08e21db09f9c742a44344fea0bba6834d19bc.png" alt="t=1:
+<p><img src="_images/math/3c798fe590c327530051fd82500f93d58d2b02ac.png" alt="t=1:
 
-\mathit{StateOfChargeBattery}_1 = BatteryNominalCapacity - \mathit{EnergyBatteryCharge}_1 \cdot  \mathit{ChargeBatteryEfficiency}
-
-- \mathit{EnergyBatteryDischarge}_1 \cdot  \mathit{DischargeBatteryEfficiency}"/></p>
+\mathit{StateOfChargeBattery}_{s,1} = BatteryNominalCapacity - \mathit{EnergyBatteryCharge}_{s,1} \cdot  \mathit{ChargeBatteryEfficiency} - \mathit{EnergyBatteryDischarge}_{s,1} \cdot  \mathit{DischargeBatteryEfficiency}"/></p>
 </div><div class="math">
-<p><img src="_images/math/120cb0ce54c6bd0149ba0f9d8c505ee56352fa36.png" alt="t&gt;1:
+<p><img src="_images/math/e49a6203572b793a59e33f3cfdec9c85293ad8ed.png" alt="t&gt;1:
 
-\mathit{StateOfChargeBattery}_t = BatteryNominalCapacity - \mathit{EnergyBatteryCharge}_t \cdot  \mathit{ChargeBatteryEfficiency}
-
-- \mathit{EnergyBatteryDischarge}_t \cdot  \mathit{DischargeBatteryEfficiency}"/></p>
+\mathit{StateOfChargeBattery}_{s,t} = BatteryNominalCapacity - \mathit{EnergyBatteryCharge}_{s,t} \cdot  \mathit{ChargeBatteryEfficiency} - \mathit{EnergyBatteryDischarge}_{s,t} \cdot  \mathit{DischargeBatteryEfficiency}"/></p>
 </div><p>In this equations is important to highlight that in the period 1 the stated of charge of the batterie is equal to the total capacity of the battery.</p>
 <p>In order to ensure the durability of the battery a minimum depth of discharge (%) and maximum charge are establish as a constraint:</p>
 <div class="math">
-<p><img src="_images/math/d4ef9787b89093c1609c63ce8ea4f14038753485.png" alt="BatteryNominalCapacity \cdot DeepOfDischarge \leq \mathit{StateOfChargeBattery}_t \leq BatteryNominalCapacity"/></p>
+<p><img src="_images/math/dd130e74f69dd465320ae5b73b5d3e0baa1ebad3.png" alt="BatteryNominalCapacity \cdot DeepOfDischarge \leq \mathit{StateOfChargeBattery}_{s,t} \leq BatteryNominalCapacity"/></p>
 </div><p>The maximum power of charge and discharge are modeled as follow:</p>
 <div class="math">
 <p><img src="_images/math/24c5fe8b34047e6f92752924dd35483ed4eee9cd.png" alt="MaximunChargePower = BatteryNominalCapacity/MaximunBatteryChargeTime
@@ -635,20 +693,20 @@
 MaximunDischargePower = BatteryNominalCapacity/MaximunBatteryDischargeTime"/></p>
 </div><p>The flow of energy is into and out of the battery is restricted by:</p>
 <div class="math">
-<p><img src="_images/math/4a011b297e77bf550651298c9cd882cca0f66ddd.png" alt="\mathit{EnergyBatteryCharge}_t \geq - MaximunChargePower \cdot DeltaTime
+<p><img src="_images/math/84d3e207d59eaccfe75ab185ff32f1ac80e948f2.png" alt="\mathit{EnergyBatteryCharge}_{s,t} \geq - MaximunChargePower \cdot DeltaTime
 
-\mathit{EnergyBatteryDischarge}_t \leq MaximunDischargePower \cdot DeltaTime"/></p>
+\mathit{EnergyBatteryDischarge}_{s,t} \leq MaximunDischargePower \cdot DeltaTime"/></p>
 </div></div>
 <div class="section" id="energy-constraints">
 <h3>Energy constraints<a class="headerlink" href="#energy-constraints" title="Permalink to this headline">¶</a></h3>
 <p>In order to ensure a perfect match between generation and demand, an energy balance is created as a constraint.</p>
 <div class="math">
-<p><img src="_images/math/40f674ab3a2dd0f6a67ccde9271050763d9b92e6.png" alt="\mathit{EnergyDemand}_t = \mathit{TotalEnergyPV}_t + \mathit{DieselConsumed}_t + \mathit{EnergyBatteryCharge}_t
+<p><img src="_images/math/9a53f54f0c52a8e9e2afb824f4d9e8cfb5de5d35.png" alt="\mathit{EnergyDemand}_{s,t} = \mathit{TotalEnergyPV}_{s,t} + \mathit{DieselConsumed}_{s,t} + \mathit{EnergyBatteryCharge}_{s,t}
 
-+ \mathit{EnergyBatteryDischarge}_t + \mathit{EnergyCurtailment}_t + \mathit{LostLoad}_t"/></p>
++ \mathit{EnergyBatteryDischarge}_{s,t} + \mathit{EnergyCurtailment}_{s,t} + \mathit{LostLoad}_{s,t}"/></p>
 </div><p>This constraint is used to ensure that a percentage of the demand will always be supply and is express as follow:</p>
 <div class="math">
-<p><img src="_images/math/1086fc5a9dc142faddaf51982fc51a320a3fee3d.png" alt="LostLoadProbability =  \frac{\sum _t\mathit{LostLoad}_t} {\sum _t\mathit{EnergyDemand}_t}"/></p>
+<p><img src="_images/math/b8b786f37712cb9b26c20af9b24bd3b8dbcc4472.png" alt="LostLoadProbability =  \frac{\sum _t\mathit{LostLoad}_{s,t}} {\sum _t\mathit{EnergyDemand}_{s,t}}"/></p>
 </div></div>
 </div>
 </div>

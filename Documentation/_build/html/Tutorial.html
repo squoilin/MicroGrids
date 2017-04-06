@@ -154,7 +154,7 @@
 <p>The MicroGrid library can be use in Linux or windows and needs different programs and phyton libraries in order to work.</p>
 <div class="section" id="python">
 <h3>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h3>
-<p>First of all Micro-Grids needs Python 2.7.10 install in the computer. The easiest way to obtain it, is download <a class="reference external" href="https://www.continuum.io/downloads">anaconda</a> in order to have all the tools needed to run python scripts.</p>
+<p>First of all Micro-Grids needs Python 3 install in the computer. The easiest way to obtain it, is download <a class="reference external" href="https://www.continuum.io/downloads">anaconda</a> in order to have all the tools needed to run python scripts.</p>
 </div>
 <div class="section" id="python-libraries">
 <h3>Python libraries<a class="headerlink" href="#python-libraries" title="Permalink to this headline">¶</a></h3>
@@ -232,11 +232,19 @@
 </tr>
 <tr class="row-odd"><td>PlotTime</td>
 <td>param: PlotTime := 1;</td>
-<td>Can be more than 1</td>
+<td>The number of days to be plot</td>
 </tr>
 <tr class="row-even"><td>PlotDay</td>
 <td>param: PlotDay := &#8216;02/01/2014 01:00:00&#8217;;</td>
 <td>month/day/year hour:minute:second</td>
+</tr>
+<tr class="row-odd"><td>PlotScenario</td>
+<td>param: PlotScenario := 2;</td>
+<td>The scenario to be ploted</td>
+</tr>
+<tr class="row-even"><td>Delta_Time</td>
+<td>param: Delta_Time := 1.0;</td>
+<td>Duration of the periods</td>
 </tr>
 <tr class="row-odd"><td>PVNominalCapacity</td>
 <td>param: PV_Nominal_Capacity := 300;</td>
@@ -246,28 +254,36 @@
 <td>param: PV_invesment_Cost := 1.6667;</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-odd"><td>ChargeBatteryEfficiency</td>
+<tr class="row-odd"><td>InverterEfficiency</td>
+<td>param: Inverter_Efficiency := 0.986;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>ChargeBatteryEfficiency</td>
 <td>param: Charge_Battery_Efficiency := 0.95;</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-even"><td>DischargeBatteryEfficiency</td>
+<tr class="row-odd"><td>DischargeBatteryEfficiency</td>
 <td>param: Discharge_Battery_Efficiency := 0.95;</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-odd"><td>DeepOfDischarge</td>
+<tr class="row-even"><td>DeepOfDischarge</td>
 <td>param: Deep_of_Discharge := 0.2;</td>
 <td>Between 0 a 1</td>
 </tr>
-<tr class="row-even"><td>MaximunBatteryChargeTime</td>
+<tr class="row-odd"><td>MaximunBatteryChargeTime</td>
 <td>param: Maximun_Battery_Charge_Time := 5;</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-odd"><td>MaximunBatteryDischargeTime</td>
+<tr class="row-even"><td>MaximunBatteryDischargeTime</td>
 <td>param: Maximun_Battery_Discharge_Time := 5;</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-even"><td>BatteryInvesmentCost</td>
+<tr class="row-odd"><td>BatteryInvesmentCost</td>
 <td>param: Battery_Invesment_Cost := 0.6;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>N</td>
+<td>param: Battery_Reposition_Time := 10;</td>
 <td>&nbsp;</td>
 </tr>
 <tr class="row-odd"><td>GeneratorEfficiency</td>
@@ -279,7 +295,7 @@
 <td>It depends on the fuel used</td>
 </tr>
 <tr class="row-odd"><td>DieselCost</td>
-<td>param: Diesel_Cost := 1.18;</td>
+<td>param: Diesel_Unitary_Cost := 1.18;</td>
 <td>&nbsp;</td>
 </tr>
 <tr class="row-even"><td>GeneratorInvesmentCost</td>
@@ -326,27 +342,34 @@
 <td>param: Interest_Rate_Loan := 0.06;</td>
 <td>&nbsp;</td>
 </tr>
+<tr class="row-odd"><td>s</td>
+<td>param: Scenarios :=3;</td>
+<td>&nbsp;</td>
+</tr>
 </tbody>
 </table>
 <p>This file must be save inside the folder &#8220;Inputs&#8221;. An example can be downloaded in the fallowing link:</p>
+<p><a class="reference external" href="https://github.com/squoilin/MicroGrids/tree/master/MicroGrids/Example">https://github.com/squoilin/MicroGrids/tree/master/MicroGrids/Example</a></p>
 </div>
 <div class="section" id="demand-xls-file">
 <h3>Demand.xls file<a class="headerlink" href="#demand-xls-file" title="Permalink to this headline">¶</a></h3>
 <p>The Demand.xls file has to have the energy demand of the system in each period of analysis. The excel file must have a column with the periods and another with the demand in W as shown in the following figure.</p>
 <img alt="_images/Demand.png" src="_images/Demand.png" />
 <p>This file must be save inside the folder &#8220;Inputs&#8221;. An example can be downloaded in the fallowing link:</p>
+<p><a class="reference external" href="https://github.com/squoilin/MicroGrids/tree/master/MicroGrids/Example">https://github.com/squoilin/MicroGrids/tree/master/MicroGrids/Example</a></p>
 </div>
 <div class="section" id="pv-energy-xls">
 <h3>PV_Energy.xls<a class="headerlink" href="#pv-energy-xls" title="Permalink to this headline">¶</a></h3>
-<p>The PV_Energy.xls file has to have the energy yield for one PV in each period of analysis. The excel file must have a column with the periods and another with energy yield in W as shown in the following figure.</p>
+<p>The PV_Energy.xls file has to have the energy yield for one PV in each period of analysis. The excel file must have a column with the periods and the number of columns equal to the number of scenarios energy yield in W as shown in the following figure.</p>
 <img alt="_images/PV_Energy.png" src="_images/PV_Energy.png" />
 <p>This file must be save inside the folder &#8220;Inputs&#8221;. An example can be downloaded in the fallowing link:</p>
+<p><a class="reference external" href="https://github.com/squoilin/MicroGrids/tree/master/MicroGrids/Example">https://github.com/squoilin/MicroGrids/tree/master/MicroGrids/Example</a></p>
 </div>
 </div>
 <div class="section" id="run-micro-grids-library">
 <h2>Run Micro-Grids library<a class="headerlink" href="#run-micro-grids-library" title="Permalink to this headline">¶</a></h2>
 <p>Once all the above steps are performed, the easiest way to run the Micro-grids library is opening the Micro-Grids.py file in an development environment like spider and run the script inside it. Another way is to open a terminal in the folder where all the scripts are and use the following command:</p>
-<p>python Micro-Grids</p>
+<p>python Micro-Grids.py</p>
 </div>
 <div class="section" id="outputs">
 <h2>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">¶</a></h2>
@@ -366,13 +389,17 @@
 <tbody valign="top">
 <tr class="row-even"><td>Size.xls</td>
 <td>Txt file</td>
-<td>Contains the nominal capacities of the PV, Battery, Diesel generator and the NPV of the system</td>
+<td>Contains the nominal capacities of the PV, Battery, Diesel generator and other information</td>
 </tr>
 <tr class="row-odd"><td>Time_series.xls</td>
 <td>Excel file</td>
 <td>Contains the the energy flow in each period for all the energy variables and the diesel consume</td>
 </tr>
-<tr class="row-even"><td>Energy_flow.png</td>
+<tr class="row-even"><td>Scenario_Information.xls</td>
+<td>Excel file</td>
+<td>Contains some information of the scenarios</td>
+</tr>
+<tr class="row-odd"><td>Energy_flow.png</td>
 <td>Excel file</td>
 <td>Contains the Figure of the energy flow from the &#8216;PlotDay&#8217; during for &#8216;PlotTime&#8217; days</td>
 </tr>

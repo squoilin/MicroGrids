@@ -18,7 +18,7 @@ import os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.insert(0, os.path.abspath('/home/sergio/Dropbox/Energia/pyomo/Codigo/Repositorio/V10'))
+sys.path.insert(0, os.path.abspath('/home/sergio/Dropbox/Energia/Conferencias/2017/ECOS 2017/Ecos 2017 LP'))
 
 # -- General configuration ------------------------------------------------
 'sphinx.ext.autodoc'
