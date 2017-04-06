@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Micro-Grids 1.0.0 documentation" href="index.html"/>
         <link rel="next" title="API Documentation" href="API.html"/>
         <link rel="prev" title="Overview" href="Overview.html"/> 
@@ -41,6 +46,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -81,7 +87,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model Description</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#sets">Sets</a></li>
@@ -126,8 +135,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Micro-Grids</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Micro-Grids</a>
+        
       </nav>
 
 
@@ -136,23 +147,40 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Model Description</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Model Description</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/Model Description.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/Model Description.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -220,7 +248,7 @@
 <td>Start date for the dispatch plot</td>
 </tr>
 <tr class="row-odd"><td>PlotScenario</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 <td>Scenario to be plot</td>
 </tr>
 </tbody>
@@ -621,79 +649,79 @@
 <h2>Objective function<a class="headerlink" href="#objective-function" title="Permalink to this headline">¶</a></h2>
 <p>The objective function will minimize the sum of the multiplication of the net present cost of each scenario and their probability of occurrence.</p>
 <div class="math">
-<p><img src="_images/math/b4992941f3dd06d2bf46245be0949a1b207b5a8e.png" alt="Objective Funtion = \sum _s\mathit{ScenarioNetPresentCost}_s  \cdot \mathit{ProbalityOccurrence}_s"/></p>
+<p><img src="_images/math/c87fd9762306c51cf986b6c24566c1e6ef8b3b0c.png" alt="Objective Funtion = \sum _s\mathit{ScenarioNetPresentCost}_s  \cdot \mathit{ProbalityOccurrence}_s"/></p>
 </div><p>The net present cost of each scenario is computed with the following equation:</p>
 <div class="math">
-<p><img src="_images/math/196bae091512dfa9cf7ca1d6e0115a008e34a5cb.png" alt="\mathit{ScenarioNetPresentCost}_s = InitialInversion + OyMCost + FinancialCostTotal
+<p><img src="_images/math/70395420984daac2cb9f7cdef0a027207c217783.png" alt="\mathit{ScenarioNetPresentCost}_s = InitialInversion + OyMCost + FinancialCostTotal
 
         + BatteryRepositionCost + \mathit{DieselCostTotal}_s + \mathit{LostLoadCostTotal}_s"/></p>
 </div><p>The total investment equation is:</p>
 <div class="math">
-<p><img src="_images/math/a425db348106afd4aa1ba2adcf8efc164fe25eac.png" alt="InitialInversion = (PVinvestmentCost \cdot PVNominalCapacity \cdot PVUnits +BatteryNominalCapacity \cdot BatteryInvestmentCost
+<p><img src="_images/math/19d2e29b50115cfd907d827ca14114b19832bace.png" alt="InitialInversion = (PVinvestmentCost \cdot PVNominalCapacity \cdot PVUnits +BatteryNominalCapacity \cdot BatteryInvestmentCost
 
 + GeneratorInvestmentCost \cdot GeneratorNominalCapacity  ) \cdot (1 - PorcentageFunded)"/></p>
 </div><p>The OyMCost is calculated by the following equation:</p>
 <div class="math">
-<p><img src="_images/math/8f265a2ffa3241712a0382ac7acad0ad8301bc7d.png" alt="OyMCostPV = PVinvesmentCost \cdot PVNominalCapacity \cdot PVUnits \cdot MaintenanceOperationCostPV"/></p>
+<p><img src="_images/math/d091ec13ef5d7a0657f891373bceb4126534a019.png" alt="OyMCostPV = PVinvesmentCost \cdot PVNominalCapacity \cdot PVUnits \cdot MaintenanceOperationCostPV"/></p>
 </div><div class="math">
-<p><img src="_images/math/ff5dffb507678df513b3272225fa5cfcff123433.png" alt="OyMCostBattery = BatteryNominalCapacity \cdot BatteryInvesmentCost  \cdot MaintenanceOperationCostBattery"/></p>
+<p><img src="_images/math/9637a2ab2070a0b5431d20481f55c56fa58eaa4f.png" alt="OyMCostBattery = BatteryNominalCapacity \cdot BatteryInvesmentCost  \cdot MaintenanceOperationCostBattery"/></p>
 </div><div class="math">
-<p><img src="_images/math/2dc6a74cf77a8dd94132b3cdde0aeac30d7f374f.png" alt="OyMCostGenerator = GeneratorInvesmentCost \cdot GeneratorNominalCapacity  \cdot MaintenanceOperationCostGenerator"/></p>
+<p><img src="_images/math/5a4b272e0948dda3768c3eaa868847f373878709.png" alt="OyMCostGenerator = GeneratorInvesmentCost \cdot GeneratorNominalCapacity  \cdot MaintenanceOperationCostGenerator"/></p>
 </div><div class="math">
-<p><img src="_images/math/66b532c5dbcb71631ba82ce163ec9d29706c121b.png" alt="OyMCost = \sum _n\frac{ OyMCostPV + OyMCostBattery + OyMCostGenerator} {(1 + DiscountRate)^{n}}"/></p>
+<p><img src="_images/math/35b610c7b10b28f4334cc767d88c819140867d63.png" alt="OyMCost = \sum _n\frac{ OyMCostPV + OyMCostBattery + OyMCostGenerator} {(1 + DiscountRate)^{n}}"/></p>
 </div><p>The financial cost is a fix amount, that is payed each period to pay the loan acquire to finance a percentage of the initial investment and is calculated with the following equation:</p>
 <div class="math">
-<p><img src="_images/math/f804939b722d25affb6900baa24378088997a99f.png" alt="FinancialCost = \frac{INV \cdot PorcentageFunded \cdot InterestRate} {1 - (1 +InterestRate)^{-N}}"/></p>
+<p><img src="_images/math/11750f2232135c3523202eea265b53ca98ab9219.png" alt="FinancialCost = \frac{INV \cdot PorcentageFunded \cdot InterestRate} {1 - (1 +InterestRate)^{-N}}"/></p>
 </div><p>The total cost incurred in the lifetime of the project for the financial cost is calculated with equation:</p>
 <div class="math">
-<p><img src="_images/math/a887b1f8213d19041fd31d0b0741d4850c5d818f.png" alt="FinancialCostTotal = \sum _n\frac{FinancialCost} {(1+ DiscountRate)^{n}}"/></p>
+<p><img src="_images/math/5b06f5d97ff118c4fe09799abffcf7a601504788.png" alt="FinancialCostTotal = \sum _n\frac{FinancialCost} {(1+ DiscountRate)^{n}}"/></p>
 </div><p>The replacement cost is given by the fallowing equation:</p>
 <div class="math">
-<p><img src="_images/math/4d9e763d17b33ce2a9009d492a8bbde3091a92e3.png" alt="\mathit{ReplacementCost}_{10} = \frac{BatteryNominalCapacity \cdot BatteryInvesmentCost} {(1+ DiscountRate)^{N}}"/></p>
+<p><img src="_images/math/26d716d706c5a4f0e3bb417afce289a957fdff3d.png" alt="\mathit{ReplacementCost}_{10} = \frac{BatteryNominalCapacity \cdot BatteryInvesmentCost} {(1+ DiscountRate)^{N}}"/></p>
 </div><p>The Diesel cost is calculated by:</p>
 <div class="math">
-<p><img src="_images/math/cbd146421b1ca194894e579d3fbac9fc38305e9b.png" alt="\mathit{DieselCostTotal}_s = \sum _n\frac{\sum _t\mathit{DieselConsumed}_{s,t} \cdot DieselCost} {(1+ DiscountRate)^{n}}"/></p>
+<p><img src="_images/math/f2b8a2cd53181825d7437f2cc7e40fd67d0e75ae.png" alt="\mathit{DieselCostTotal}_s = \sum _n\frac{\sum _t\mathit{DieselConsumed}_{s,t} \cdot DieselCost} {(1+ DiscountRate)^{n}}"/></p>
 </div><p>Finally the cost for the unmment load is calculated with the following equation:</p>
 <div class="math">
-<p><img src="_images/math/8198f28c2b27f51812dfd82287e4b855b587b2e4.png" alt="\mathit{LostLoadCostTotal}_s = \sum _n\frac{\sum _t\mathit{LostLoad}_{s,t} \cdot ValueOfLostLoad} {(1+ DiscountRate)^{n}}"/></p>
+<p><img src="_images/math/86ddbd2e48e5ea7553e7e3bcef0307488fb9ae1f.png" alt="\mathit{LostLoadCostTotal}_s = \sum _n\frac{\sum _t\mathit{LostLoad}_{s,t} \cdot ValueOfLostLoad} {(1+ DiscountRate)^{n}}"/></p>
 </div><div class="section" id="pv-model">
 <h3>PV model<a class="headerlink" href="#pv-model" title="Permalink to this headline">¶</a></h3>
 <p>The equation that model the PV array energy yield is given by:</p>
 <div class="math">
-<p><img src="_images/math/f356339f5825a3a7182cd3a1d86a056aeb93287c.png" alt="\mathit{TotalEnergyPV}_{s,t} = \mathit{PVEnergyProduction}_{s,t} \cdot \mathit{InverterEfficiency} \cdot \mathit{PVUnits}"/></p>
+<p><img src="_images/math/28505966d42c2c98b6091ee0c037c33cd789f282.png" alt="\mathit{TotalEnergyPV}_{s,t} = \mathit{PVEnergyProduction}_{s,t} \cdot \mathit{InverterEfficiency} \cdot \mathit{PVUnits}"/></p>
 </div></div>
 <div class="section" id="diesel-generator">
 <h3>Diesel generator<a class="headerlink" href="#diesel-generator" title="Permalink to this headline">¶</a></h3>
 <p>The fuel consumption is modeled by:</p>
 <div class="math">
-<p><img src="_images/math/ef2c88f9abe7ecaa0f2df4e0ec262261b182fdef.png" alt="\mathit{DieselConsumed}_{s,t} = \mathit{GeneratorEnergy}_{s,t} / (\mathit{GeneratorEfficiency} \cdot \mathit{LowHeatingValue})"/></p>
+<p><img src="_images/math/2e9027d21ea0e9af2d00e1b43d8d4dfa0d52b04d.png" alt="\mathit{DieselConsumed}_{s,t} = \mathit{GeneratorEnergy}_{s,t} / (\mathit{GeneratorEfficiency} \cdot \mathit{LowHeatingValue})"/></p>
 </div><p>In order to ensure that the generator will not exceed his capacity the fallowing constraint is added to the model:</p>
 <div class="math">
-<p><img src="_images/math/37778cca059505c6199544eef79c1ceb97f8224f.png" alt="\mathit{GeneratorNominalCapacity} \cdot \mathit{DeltaTime} \geq \mathit{GeneratorEnergy}_{s,t}"/></p>
+<p><img src="_images/math/14113052059cf3db3adfeff3f755adabb26d6ed0.png" alt="\mathit{GeneratorNominalCapacity} \cdot \mathit{DeltaTime} \geq \mathit{GeneratorEnergy}_{s,t}"/></p>
 </div></div>
 <div class="section" id="battery-bank">
 <h3>Battery bank<a class="headerlink" href="#battery-bank" title="Permalink to this headline">¶</a></h3>
 <p>The state of charge of the battery is modeled by:</p>
 <div class="math">
-<p><img src="_images/math/3c798fe590c327530051fd82500f93d58d2b02ac.png" alt="t=1:
+<p><img src="_images/math/3da52e7a7952743dc953d32b8bf2567bf6f6dc88.png" alt="t=1:
 
 \mathit{StateOfChargeBattery}_{s,1} = BatteryNominalCapacity - \mathit{EnergyBatteryCharge}_{s,1} \cdot  \mathit{ChargeBatteryEfficiency} - \mathit{EnergyBatteryDischarge}_{s,1} \cdot  \mathit{DischargeBatteryEfficiency}"/></p>
 </div><div class="math">
-<p><img src="_images/math/e49a6203572b793a59e33f3cfdec9c85293ad8ed.png" alt="t&gt;1:
+<p><img src="_images/math/a622a1a1892313068dafffa5254c0f827a9a6b4d.png" alt="t&gt;1:
 
 \mathit{StateOfChargeBattery}_{s,t} = BatteryNominalCapacity - \mathit{EnergyBatteryCharge}_{s,t} \cdot  \mathit{ChargeBatteryEfficiency} - \mathit{EnergyBatteryDischarge}_{s,t} \cdot  \mathit{DischargeBatteryEfficiency}"/></p>
 </div><p>In this equations is important to highlight that in the period 1 the stated of charge of the batterie is equal to the total capacity of the battery.</p>
 <p>In order to ensure the durability of the battery a minimum depth of discharge (%) and maximum charge are establish as a constraint:</p>
 <div class="math">
-<p><img src="_images/math/dd130e74f69dd465320ae5b73b5d3e0baa1ebad3.png" alt="BatteryNominalCapacity \cdot DeepOfDischarge \leq \mathit{StateOfChargeBattery}_{s,t} \leq BatteryNominalCapacity"/></p>
+<p><img src="_images/math/1e7c03eba2353f165adbe8d95e0fda0fbaac910a.png" alt="BatteryNominalCapacity \cdot DeepOfDischarge \leq \mathit{StateOfChargeBattery}_{s,t} \leq BatteryNominalCapacity"/></p>
 </div><p>The maximum power of charge and discharge are modeled as follow:</p>
 <div class="math">
-<p><img src="_images/math/24c5fe8b34047e6f92752924dd35483ed4eee9cd.png" alt="MaximunChargePower = BatteryNominalCapacity/MaximunBatteryChargeTime
+<p><img src="_images/math/e3c8dc2e7c29583c920d23a6d42305493738a220.png" alt="MaximunChargePower = BatteryNominalCapacity/MaximunBatteryChargeTime
 
 MaximunDischargePower = BatteryNominalCapacity/MaximunBatteryDischargeTime"/></p>
 </div><p>The flow of energy is into and out of the battery is restricted by:</p>
 <div class="math">
-<p><img src="_images/math/84d3e207d59eaccfe75ab185ff32f1ac80e948f2.png" alt="\mathit{EnergyBatteryCharge}_{s,t} \geq - MaximunChargePower \cdot DeltaTime
+<p><img src="_images/math/aae4d1979d54d76906d4af59da9334f9fedae98c.png" alt="\mathit{EnergyBatteryCharge}_{s,t} \geq - MaximunChargePower \cdot DeltaTime
 
 \mathit{EnergyBatteryDischarge}_{s,t} \leq MaximunDischargePower \cdot DeltaTime"/></p>
 </div></div>
@@ -701,27 +729,30 @@ MaximunDischargePower = BatteryNominalCapacity/MaximunBatteryDischargeTime"/></p
 <h3>Energy constraints<a class="headerlink" href="#energy-constraints" title="Permalink to this headline">¶</a></h3>
 <p>In order to ensure a perfect match between generation and demand, an energy balance is created as a constraint.</p>
 <div class="math">
-<p><img src="_images/math/9a53f54f0c52a8e9e2afb824f4d9e8cfb5de5d35.png" alt="\mathit{EnergyDemand}_{s,t} = \mathit{TotalEnergyPV}_{s,t} + \mathit{DieselConsumed}_{s,t} + \mathit{EnergyBatteryCharge}_{s,t}
+<p><img src="_images/math/bdea9c4e6aed88a7aa490d8d48e192e860658a15.png" alt="\mathit{EnergyDemand}_{s,t} = \mathit{TotalEnergyPV}_{s,t} + \mathit{DieselConsumed}_{s,t} + \mathit{EnergyBatteryCharge}_{s,t}
 
 + \mathit{EnergyBatteryDischarge}_{s,t} + \mathit{EnergyCurtailment}_{s,t} + \mathit{LostLoad}_{s,t}"/></p>
 </div><p>This constraint is used to ensure that a percentage of the demand will always be supply and is express as follow:</p>
 <div class="math">
-<p><img src="_images/math/b8b786f37712cb9b26c20af9b24bd3b8dbcc4472.png" alt="LostLoadProbability =  \frac{\sum _t\mathit{LostLoad}_{s,t}} {\sum _t\mathit{EnergyDemand}_{s,t}}"/></p>
+<p><img src="_images/math/f9785642d6972e24338c9c3c95a52c05420fdfbc.png" alt="LostLoadProbability =  \frac{\sum _t\mathit{LostLoad}_{s,t}} {\sum _t\mathit{EnergyDemand}_{s,t}}"/></p>
 </div></div>
 </div>
 </div>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="API.html" class="btn btn-neutral float-right" title="API Documentation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="API.html" class="btn btn-neutral float-right" title="API Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Overview.html" class="btn btn-neutral" title="Overview" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Overview.html" class="btn btn-neutral" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -755,7 +786,8 @@ MaximunDischargePower = BatteryNominalCapacity/MaximunBatteryDischargeTime"/></p
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

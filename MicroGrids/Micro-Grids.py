@@ -8,8 +8,6 @@ from Model_Creation import Model_Creation
 from Model_Resolution import Model_Resolution
 from Economical_Analisis import Levelized_Cost_Of_Energy
 
-#import os
-#os.environ['PATH']=os.environ['PATH']+':/home/sergio/x86-64_linux'
 
 # Optimization model
 model = AbstractModel() # define type of optimization problem

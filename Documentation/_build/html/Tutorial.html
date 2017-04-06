@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Micro-Grids 1.0.0 documentation" href="index.html"/>
         <link rel="prev" title="API Documentation" href="API.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Model Description.html">Model Description</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Documentation</a></li>
@@ -114,8 +123,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Micro-Grids</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Micro-Grids</a>
+        
       </nav>
 
 
@@ -124,23 +135,40 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Tutorial</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/Tutorial.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/Tutorial.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -248,23 +276,23 @@
 </tr>
 <tr class="row-odd"><td>PVNominalCapacity</td>
 <td>param: PV_Nominal_Capacity := 300;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>PVinvesmentCost</td>
 <td>param: PV_invesment_Cost := 1.6667;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>InverterEfficiency</td>
 <td>param: Inverter_Efficiency := 0.986;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>ChargeBatteryEfficiency</td>
 <td>param: Charge_Battery_Efficiency := 0.95;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>DischargeBatteryEfficiency</td>
 <td>param: Discharge_Battery_Efficiency := 0.95;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>DeepOfDischarge</td>
 <td>param: Deep_of_Discharge := 0.2;</td>
@@ -272,23 +300,23 @@
 </tr>
 <tr class="row-odd"><td>MaximunBatteryChargeTime</td>
 <td>param: Maximun_Battery_Charge_Time := 5;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>MaximunBatteryDischargeTime</td>
 <td>param: Maximun_Battery_Discharge_Time := 5;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>BatteryInvesmentCost</td>
 <td>param: Battery_Invesment_Cost := 0.6;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>N</td>
 <td>param: Battery_Reposition_Time := 10;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>GeneratorEfficiency</td>
 <td>param: Generator_Efficiency := 0.337040782;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>LowHeatingValue</td>
 <td>param: Low_Heating_Value := 9890;</td>
@@ -296,11 +324,11 @@
 </tr>
 <tr class="row-odd"><td>DieselCost</td>
 <td>param: Diesel_Unitary_Cost := 1.18;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>GeneratorInvesmentCost</td>
 <td>param: Generator_Invesment_Cost := 1.48;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>LostLoadProbability</td>
 <td>param: Lost_Load_Probability := 0.00;</td>
@@ -308,7 +336,7 @@
 </tr>
 <tr class="row-even"><td>ValueOfLostLoad</td>
 <td>param: Value_Of_Lost_Load := 0.18;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>Periods</td>
 <td>param: Periods := 8760;</td>
@@ -316,35 +344,35 @@
 </tr>
 <tr class="row-even"><td>Years</td>
 <td>param: Years := 20;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>PorcentageFunded</td>
 <td>param: Porcentage_Funded := 0.55;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>MaintenanceOperationCostPV</td>
 <td>param: Maintenance_Operation_Cost_PV := 0.015;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>MaintenanceOperationCostBattery</td>
 <td>param: Maintenance_Operation_Cost_Battery:= 0.015;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>MaintenanceOperationCostGenerator</td>
 <td>param: Maintenance_Operation_Cost_Generator := 0.015;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>DiscountRate</td>
 <td>param: Discount_Rate := 0.12;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td>InterestRate</td>
 <td>param: Interest_Rate_Loan := 0.06;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td>s</td>
 <td>param: Scenarios :=3;</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
@@ -410,13 +438,16 @@
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="API.html" class="btn btn-neutral" title="API Documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="API.html" class="btn btn-neutral" title="API Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -450,7 +481,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
