@@ -6,7 +6,7 @@ from pyomo.environ import  AbstractModel
 from Results import Plot_Energy_Total, Load_results1, Load_results2
 from Model_Creation import Model_Creation
 from Model_Resolution import Model_Resolution
-from Economical_Analisis import Levelized_Cost_Of_Energy
+from Economical_Analysis import Levelized_Cost_Of_Energy
 
 
 # Optimization model
