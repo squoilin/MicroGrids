@@ -56,13 +56,9 @@ param: Battery_Reposition_Time := 10;
 
 # new parameters
 
-param: Percentage_Load_1 := 0.0;
-param: Percentage_Load_2 := 0.5;
-param: Percentage_Load_3 := 1.0;
+param: Generator_Effiency:= 0.33;
 
-param: Diesel_Generator_Efficiency_1 := 0.0;
-param: Diesel_Generator_Efficiency_2 := 0.37;
-param: Diesel_Generator_Efficiency_3 := 0.39;
+param: Generator_Min_Out_Put:= 0.3; 
 
 param: Number_Generator := 2;
 
