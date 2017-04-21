@@ -194,6 +194,32 @@ def Model_Creation_binary(model):
     model.Maximun_Charge_Power= Var() # Maximun charge power in w
     model.Maximun_Discharge_Power = Var() #Maximun discharge power in w
     
+     # Variables associated to the diesel generator
     
+    model.Period_Total_Cost_Generator = Var(model.scenario,model.periods, within=NonNegativeReals)    
+    model.Period_Cost_Generator_1 = Var(model.scenario,model.periods, within=NonNegativeReals)
+    model.Energy_Generator_Total = Var(model.scenario, model.periods, within=NonNegativeReals)
+    model.Generator_Energy_1 = Var(model.scenario,model.periods, within=NonNegativeReals)
+    model.Binary_generator_1 = Var(model.scenario,model.periods, within=Binary)
+    model.Integer_generator = Var(within=PositiveIntegers)
+    model.Total_Cost_Generator = Var(model.scenario,within=NonNegativeReals)  
+    model.Generator_Total_Period_Energy = Var(model.scenario,model.periods, within=NonNegativeReals)  
+    
+    model.Generator_Energy_Integer = Var(model.scenario, model.periods, within=PositiveIntegers)
+    model.Last_Energy_Generator = Var(model.scenario, model.periods, within=NonNegativeReals)
+    
+    # Varialbles associated to the energy balance
+    model.Lost_Load = Var(model.scenario,model.periods, within=NonNegativeReals) # Energy not suply by the system kWh
+    model.Energy_Curtailment = Var(model.scenario,model.periods, within=NonNegativeReals) # Curtailment of solar energy in kWh
+    
+    # Variables associated to the project
+    model.Cost_Financial = Var(within=NonNegativeReals) # Financial cost of each period in USD
+    model.Initial_Inversion = Var(within=NonNegativeReals)
+    model.Operation_Maintenance_Cost = Var(within=NonNegativeReals)
+    model.Total_Finalcial_Cost = Var(within=NonNegativeReals)
+    model.Battery_Reposition_Cost = Var(within=NonNegativeReals)
+    model.Scenario_Lost_Load_Cost = Var(model.scenario, within=NonNegativeReals) ####  
+    model.Sceneario_Generator_Total_Cost = Var(model.scenario, within=NonNegativeReals)
+    model.Scenario_Net_Present_Cost = Var(model.scenario, within=NonNegativeReals)
 
 
