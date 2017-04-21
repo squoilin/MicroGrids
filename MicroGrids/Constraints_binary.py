@@ -29,14 +29,14 @@ def Generator_Bounds_Min(model,s,t): # Maximun energy output of the diesel gener
     minimun value.
     :param model: Pyomo model as defined in the Model_creation library.
     '''
-    return model.Last_Energy_Generator >= model.Generator_Nominal_Capacity*model.Generator_Min_Out_Put*model.Binary_generator_1                                                                                                 
+    return model.Last_Energy_Generator[s,t] >= model.Generator_Nominal_Capacity*model.Generator_Min_Out_Put*model.Binary_generator_1[s,t]                                                                                                 
                                                                                                
 def Generator_Cost_1(model,s,t):
     ''' 
     This constraint calculate the cost of each generator in the time t.
     :param model: Pyomo model as defined in the Model_creation library.
     '''
-    return model.Period_Total_Cost_Generator[s,t] ==  model.Generator_Energy_Integer[s,t]*model.Marginal_Cost_Generator + model.Marginal_Cost_Generator[s,t]*model.Last_Energy_Generator+ model.Binary_generator_1*model.Start_Cost_Generator
+    return model.Period_Total_Cost_Generator[s,t] ==  model.Generator_Energy_Integer[s,t]*model.Marginal_Cost_Generator + model.Marginal_Cost_Generator*model.Last_Energy_Generator[s,t]  + model.Binary_generator_1[s,t]*model.Start_Cost_Generator
 
 def Energy_Genarator_Energy_Max(model,s,t):
     ''' 

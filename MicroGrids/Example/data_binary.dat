@@ -64,11 +64,6 @@ param: Number_Generator := 2;
 
 param: Generator_Nominal_Capacity := 4650000;
 
-
-param: Start_Cost := 0;
-
-param: Analysis_Percentage:= 0.5;
-
 param: Scenarios :=1;
 
 param: Scenario_Weight :=

@@ -40,9 +40,9 @@ def Initialize_PV_Energy(model, i, t):
 
 def Marginal_Cost_Generator(model):
     
-    return model.Diesel_Cost/(model.Low_Heating_Value*model.model.Generator_Effiency)
+    return model.Diesel_Cost/(model.Low_Heating_Value*model.Generator_Effiency)
 
 def Start_Cost(model):
     
-    return (model.Diesel_Cost*model.Generator_Nominal_Capacity*model.Generator_Min_Out_Put)/(model.Low_Heating_Value*model.model.Generator_Effiency)
+    return (model.Diesel_Cost*model.Generator_Nominal_Capacity*model.Generator_Min_Out_Put)/(model.Low_Heating_Value*model.Generator_Effiency)
     

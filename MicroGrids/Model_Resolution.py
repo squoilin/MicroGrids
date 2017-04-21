@@ -60,7 +60,7 @@ def Model_Resolution(model,datapath="Example/data.dat"):
     return instance
     
     
-    
+    #\
 def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):   
     '''
     This function creates the model and call Pyomo to solve the instance of the proyect 
@@ -69,12 +69,7 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
     
     :return: The solution inside an object call instance.
     '''
-    from Constraints import  Net_Present_Cost, Solar_Energy, State_of_Charge,\
-    Maximun_Charge, Minimun_Charge, Max_Power_Battery_Charge, Max_Power_Battery_Discharge, Max_Bat_in, Max_Bat_out,  \
-    Financial_Cost, Energy_balance, Maximun_Lost_Load, Generator_Bounds_Min, \
-    Generator_Cost_1, Energy_Genarator_Energy_Max, Generator_Total_Period_Energy, \
-    Total_Cost_Generator, Initial_Inversion, Operation_Maintenance_Cost,Total_Finalcial_Cost,\
-    Battery_Reposition_Cost, Scenario_Lost_Load_Cost, Sceneario_Generator_Total_Cost,Scenario_Net_Present_Cost 
+    from Constraints_binary import  Net_Present_Cost, Solar_Energy, State_of_Charge, Maximun_Charge, Minimun_Charge, Max_Power_Battery_Charge, Max_Power_Battery_Discharge, Max_Bat_in, Max_Bat_out,  Financial_Cost, Energy_balance, Maximun_Lost_Load, Generator_Cost_1, Energy_Genarator_Energy_Max,  Total_Cost_Generator, Initial_Inversion, Operation_Maintenance_Cost,Total_Finalcial_Cost, Battery_Reposition_Cost, Scenario_Lost_Load_Cost, Sceneario_Generator_Total_Cost,Scenario_Net_Present_Cost, Generator_Bounds_Min 
 
     # OBJETIVE FUNTION:
     model.ObjectiveFuntion = Objective(rule=Net_Present_Cost, sense=minimize)  
@@ -111,7 +106,7 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
     model.ScenarioNetPresentCost = Constraint(model.scenario, rule=Scenario_Net_Present_Cost) 
     
     
-    instance = model.create_instance("Example/data.dat") # load parameters       
+    instance = model.create_instance("Example/data_binary.dat") # load parameters       
     opt = SolverFactory('cplex') # Solver use during the optimization    
     opt.options['emphasis_memory'] = 'y'
 #    opt.options['node_select'] = 3

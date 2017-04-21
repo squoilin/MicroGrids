@@ -152,6 +152,8 @@ def Model_Creation_binary(model):
     model.Battery_Invesment_Cost = Param(within=NonNegativeReals) # Cost of battery 
     
     # Parametes of the diesel generator
+    model.Generator_Effiency = Param(within=NonNegativeReals)
+    model.Generator_Min_Out_Put = Param(within=NonNegativeReals)
     model.Generator_Efficiency = Param() # Generator efficiency to trasform heat into electricity %
     model.Low_Heating_Value = Param() # Low heating value of the diesel in W/L
     model.Diesel_Cost = Param(within=NonNegativeReals) # Cost of diesel in USD/L
@@ -159,10 +161,6 @@ def Model_Creation_binary(model):
     model.Marginal_Cost_Generator = Param(initialize=Marginal_Cost_Generator )
     model.Generator_Nominal_Capacity = Param(within=NonNegativeReals)
     model.Start_Cost_Generator = Param(within=NonNegativeReals, initialize=Start_Cost )
-    model.Generator_Effiency = Param(within=NonNegativeReals)
-    model.Generator_Min_Out_Put = Param(within=NonNegativeReals)
-    
-    
     
     # Parameters of the Energy balance                  
     model.Energy_Demand = Param(model.scenario,model.periods, initialize=Initialize_Demand) # Energy Energy_Demand in W 
