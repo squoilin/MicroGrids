@@ -115,9 +115,9 @@ def Model_Creation_binary(model):
     :param model: Pyomo model as defined in the Micro-Grids library.
     
     '''
-    from pyomo.environ import Binary, PositiveIntegers
-    from Initialize import Marginal_Cost_Generator, initialize_Origins, initialize_Bound_Min, initialize_Bound_Max    
-    
+    from pyomo.environ import  Param, RangeSet, NonNegativeReals, Var, Binary, PositiveIntegers
+    from Initialize import Initialize_years, Initialize_Demand, Initialize_PV_Energy, Marginal_Cost_Generator, Start_Cost # Import library with initialitation funtions for the parameters
+   
     # Time parameters
     model.Periods = Param(within=NonNegativeReals) # Number of periods of analysis of the energy variables
     model.Years = Param() # Number of years of the project
@@ -156,21 +156,13 @@ def Model_Creation_binary(model):
     model.Low_Heating_Value = Param() # Low heating value of the diesel in W/L
     model.Diesel_Cost = Param(within=NonNegativeReals) # Cost of diesel in USD/L
     model.Generator_Invesment_Cost = Param(within=NonNegativeReals) # Cost of the diesel generator  
-    model.Percentage_Load_1 = Param(within=NonNegativeReals)
-    model.Percentage_Load_2 = Param(within=NonNegativeReals)
-    model.Percentage_Load_3 = Param(within=NonNegativeReals)
-    model.Diesel_Generator_Efficiency_1 = Param(within=NonNegativeReals)
-    model.Diesel_Generator_Efficiency_2 = Param(within=NonNegativeReals)
-    model.Diesel_Generator_Efficiency_3 = Param(within=NonNegativeReals)
-    model.Marginal_Cost_Generator = Param(model.Slops, initialize=Marginal_Cost_Generator )
+    model.Marginal_Cost_Generator = Param(initialize=Marginal_Cost_Generator )
     model.Generator_Nominal_Capacity = Param(within=NonNegativeReals)
-    model.Start_Cost = Param(within=NonNegativeReals)
-    model.Analysis_Percentage = Param(within=NonNegativeReals)
-    model.Cost_Origins = Param(model.Generators, model.Slops, initialize=initialize_Origins)
+    model.Start_Cost_Generator = Param(within=NonNegativeReals, initialize=Start_Cost )
+    model.Generator_Effiency = Param(within=NonNegativeReals)
+    model.Generator_Min_Out_Put = Param(within=NonNegativeReals)
     
     
-    model.Bound_Min= Param(model.Generators, model.Slops, initialize=initialize_Bound_Min )
-    model.Bound_Max= Param(model.Generators, model.Slops, initialize=initialize_Bound_Max )
     
     # Parameters of the Energy balance                  
     model.Energy_Demand = Param(model.scenario,model.periods, initialize=Initialize_Demand) # Energy Energy_Demand in W 
@@ -203,31 +195,5 @@ def Model_Creation_binary(model):
     model.Maximun_Discharge_Power = Var() #Maximun discharge power in w
     
     
-    
-    # Variables associated to the diesel generator
-    
-    model.Period_Total_Cost_Generator = Var(model.scenario,model.periods, within=NonNegativeReals)    
-    model.Period_Cost_Generator_1 = Var(model.scenario,model.periods, model.Generators, model.Slops, within=NonNegativeReals)
-    model.Energy_Generator_Total = Var(model.scenario,model.Generators, model.periods, within=NonNegativeReals)
-    model.Generator_Energy_1 = Var(model.scenario,model.periods, model.Generators, model.Slops, within=NonNegativeReals)
-    model.Binary_generator_1 = Var(model.scenario,model.periods, model.Generators, model.Slops, within=Binary)
-    model.Integer_generator = Var(within=PositiveIntegers)
-    model.Total_Cost_Generator = Var(model.scenario,within=NonNegativeReals)  
-    model.Generator_Total_Period_Energy = Var(model.scenario,model.periods, within=NonNegativeReals)  
-        
-    # Varialbles associated to the energy balance
-    model.Lost_Load = Var(model.scenario,model.periods, within=NonNegativeReals) # Energy not suply by the system kWh
-    model.Energy_Curtailment = Var(model.scenario,model.periods, within=NonNegativeReals) # Curtailment of solar energy in kWh
-    
-    # Variables associated to the project
-    model.Cost_Financial = Var(within=NonNegativeReals) # Financial cost of each period in USD
-    model.Initial_Inversion = Var(within=NonNegativeReals)
-    model.Operation_Maintenance_Cost = Var(within=NonNegativeReals)
-    model.Total_Finalcial_Cost = Var(within=NonNegativeReals)
-    model.Battery_Reposition_Cost = Var(within=NonNegativeReals)
-    model.Scenario_Lost_Load_Cost = Var(model.scenario, within=NonNegativeReals) ####  
-    model.Sceneario_Generator_Total_Cost = Var(model.scenario, within=NonNegativeReals)
-    model.Scenario_Net_Present_Cost = Var(model.scenario, within=NonNegativeReals)
-
 
 

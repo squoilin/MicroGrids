@@ -66,18 +66,16 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
     This function creates the model and call Pyomo to solve the instance of the proyect 
     
     :param model: Pyomo model as defined in the Model_creation library
-    :param datapath: path to the input data file
     
     :return: The solution inside an object call instance.
     '''
-    from Constraints_binary import  Net_Present_Cost, Solar_Energy, State_of_Charge,\
+    from Constraints import  Net_Present_Cost, Solar_Energy, State_of_Charge,\
     Maximun_Charge, Minimun_Charge, Max_Power_Battery_Charge, Max_Power_Battery_Discharge, Max_Bat_in, Max_Bat_out,  \
-    Financial_Cost, Energy_balance, Maximun_Lost_Load, Generators_Binary_Constraint, \
+    Financial_Cost, Energy_balance, Maximun_Lost_Load, Generator_Bounds_Min, \
     Generator_Cost_1, Energy_Genarator_Energy_Max, Generator_Total_Period_Energy, \
-    Period_Total_Cost_Generator,Total_Cost_Generator,Generator_Bounds_Min,\
-    Generator_Bounds_Max, Initial_Inversion, Operation_Maintenance_Cost,Total_Finalcial_Cost,\
-    Battery_Reposition_Cost, Scenario_Lost_Load_Cost, Sceneario_Generator_Total_Cost,Scenario_Net_Present_Cost, Generator_rampling_limits_down, Generator_rampling_limits_up
-    
+    Total_Cost_Generator, Initial_Inversion, Operation_Maintenance_Cost,Total_Finalcial_Cost,\
+    Battery_Reposition_Cost, Scenario_Lost_Load_Cost, Sceneario_Generator_Total_Cost,Scenario_Net_Present_Cost 
+
     # OBJETIVE FUNTION:
     model.ObjectiveFuntion = Objective(rule=Net_Present_Cost, sense=minimize)  
     
@@ -95,23 +93,13 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
 #    model.MaxPowerBatteryDischarge = Constraint(rule=Max_Power_Battery_Discharge)    # Max power battery discharge constraint
 #    model.MaxBatIn = Constraint(model.scenario,model.periods, rule=Max_Bat_in) # Minimun flow of energy for the charge fase
 #    model.Maxbatout = Constraint(model.scenario,model.periods, rule=Max_Bat_out) #minimun flow of energy for the discharge fase
-    # Diesel Generator constraints
-    model.PeriodTotalCostGenerator = Constraint(model.scenario,model.periods, rule=Period_Total_Cost_Generator)
-    
-    model.GeneratorsBinaryConstraint = Constraint(model.scenario,model.periods, rule=Generators_Binary_Constraint)
-    
-    model.GeneratorBoundsMin = Constraint(model.scenario,model.periods, model.Generators, model.Slops, rule=Generator_Bounds_Min)
-    model.GeneratorBoundsMax = Constraint(model.scenario,model.periods, model.Generators, model.Slops, rule=Generator_Bounds_Max)
-    
-    model.GeneratorCost1 = Constraint(model.scenario,model.periods, model.Generators, model.Slops, rule=Generator_Cost_1)
-
+   
+    #Diesel Generator constraints
+    model.GeneratorBoundsMin = Constraint(model.scenario,model.periods, rule=Generator_Bounds_Min) 
+    model.GeneratorCost1 = Constraint(model.scenario, model.periods,  rule=Generator_Cost_1)
     model.EnergyGenaratorEnergyMax = Constraint(model.scenario,model.periods, rule=Energy_Genarator_Energy_Max)
-    model.TotalCostGenerator = Constraint(model.scenario,rule=Total_Cost_Generator)
-    model.GeneratorTotalPeriodEnergy = Constraint(model.scenario,model.periods, rule=Generator_Total_Period_Energy)
-#    model.Generatorramplinglimitsdown =  Constraint(model.scenario,model.periods, rule=Generator_rampling_limits_down)  
-#    model.Generatorramplinglimitsup = Constraint(model.scenario,model.periods, rule=Generator_rampling_limits_up) 
-#    
-#    
+    model.TotalCostGenerator = Constraint(model.scenario, rule=Total_Cost_Generator)
+ 
     # Financial Constraints
     model.FinancialCost = Constraint(rule=Financial_Cost) # Financial cost
     model.InitialInversion = Constraint(rule=Initial_Inversion)
@@ -123,7 +111,7 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
     model.ScenarioNetPresentCost = Constraint(model.scenario, rule=Scenario_Net_Present_Cost) 
     
     
-    instance = model.create_instance(datapath) # load parameters       
+    instance = model.create_instance("Example/data.dat") # load parameters       
     opt = SolverFactory('cplex') # Solver use during the optimization    
     opt.options['emphasis_memory'] = 'y'
 #    opt.options['node_select'] = 3

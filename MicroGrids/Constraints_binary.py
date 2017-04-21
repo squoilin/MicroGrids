@@ -23,59 +23,20 @@ def Solar_Energy(model,s,t): # Energy output of the solar panels
 
 ############################################# Diesel generator constraints ###########################################
 
-def Period_Total_Cost_Generator(model,s,t):
-    '''
-    This constraint calculates the total cost in each period t of the diesel 
-    generators.
-    :param model: Pyomo model as defined in the Model_creation library.
-    '''
-    foo=[]
-    for f in range(1,model.Number_Generator+1):
-        foo.append((s,t,f,1))
-        foo.append((s,t,f,2))
-    
-    return model.Period_Total_Cost_Generator[s,t] == sum(model.Period_Cost_Generator_1[s,t,i,j] for s,t,i,j in foo)
-    
-      
-def Generators_Binary_Constraint(model,s,t):
-    '''
-    This ensure that the sum of the Generators binaries in each time t it is always 
-    equal to 1.
-    :param model: Pyomo model as defined in the Model_creation library.
-    '''
-    foo=[]
-    for i in range(1,model.Number_Generator+1):
-        foo.append((s,t,i,1))
-        foo.append((s,t,i,2))
-    
-    return sum(model.Binary_generator_1[s,t,i,j] for s,t,i,j in foo) == 1
-
-def Generator_Bounds_Min(model,s,t,i,j): # Maximun energy output of the diesel generator
+def Generator_Bounds_Min(model,s,t): # Maximun energy output of the diesel generator
     ''' 
     This constraint ensure that each segment of the generator does not pass a 
     minimun value.
     :param model: Pyomo model as defined in the Model_creation library.
     '''
-    return model.Bound_Min[i,j]*model.Binary_generator_1[s,t,i,j] <= model.Generator_Energy_1[s,t,i,j]                                                                                               
-
-    
-def Generator_Bounds_Max(model,s,t,i,j): # Maximun energy output of the diesel generator
-    ''' 
-    This constraint ensure that each segment of the generator does not pass a 
-    maximum value.
-    :param model: Pyomo model as defined in the Model_creation library.
-    '''
-    return model.Generator_Energy_1[s,t,i,j] <= model.Bound_Max[i,j]*model.Binary_generator_1[s,t,i,j]                                                                                                 
-   
-    
-    
-def Generator_Cost_1(model,s,t,i,j):
+    return model.Last_Energy_Generator >= model.Generator_Nominal_Capacity*model.Generator_Min_Out_Put*model.Binary_generator_1                                                                                                 
+                                                                                               
+def Generator_Cost_1(model,s,t):
     ''' 
     This constraint calculate the cost of each generator in the time t.
     :param model: Pyomo model as defined in the Model_creation library.
     '''
-    return model.Period_Cost_Generator_1[s,t,i,j] == model.Generator_Energy_1[s,t,i,j]*model.Marginal_Cost_Generator[j] + model.Cost_Origins[i,j]*model.Binary_generator_1[s,t,i,j]   
-
+    return model.Period_Total_Cost_Generator[s,t] ==  model.Generator_Energy_Integer[s,t]*model.Marginal_Cost_Generator + model.Marginal_Cost_Generator[s,t]*model.Last_Energy_Generator+ model.Binary_generator_1*model.Start_Cost_Generator
 
 def Energy_Genarator_Energy_Max(model,s,t):
     ''' 
@@ -99,26 +60,9 @@ def Generator_Total_Period_Energy(model,s,t):
    ''' 
    This constraint calculated the energy in the period t of the generator.
    :param model: Pyomo model as defined in the Model_creation library.
-   '''
-    
-   foo=[]
-   for f in range(1,model.Number_Generator+1):
-        foo.append((s,t,f,1))
-        foo.append((s,t,f,2))
-    
-   return model.Generator_Total_Period_Energy[s,t] == sum(model.Generator_Energy_1[s,t,i,j] for s,t,i,j in foo)
+   '''   
+   return model.Generator_Total_Period_Energy[s,t] == model.Generator_Energy_Integer + model.Last_Energy_Generator
 
-def Generator_rampling_limits_up(model,s,t):
-    if t== 1:
-        return Constraint.Skip
-    else:    
-        return model.Generator_Total_Period_Energy[s,t] - model.Generator_Total_Period_Energy[s,t-1]  <= model.Generator_Nominal_Capacity*0.3
-def Generator_rampling_limits_down(model,s,t):
-    if t==1:    
-        return Constraint.Skip 
-    else:
-        return model.Generator_Total_Period_Energy[s,t] - model.Generator_Total_Period_Energy[s,t-1]  >= -model.Generator_Nominal_Capacity*0.3
-    
 ############################################# Battery constraints ####################################################
 
 def State_of_Charge(model,s,t): # State of Charge of the battery
