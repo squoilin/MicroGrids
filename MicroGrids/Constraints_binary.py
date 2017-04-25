@@ -23,22 +23,30 @@ def Solar_Energy(model,s,t): # Energy output of the solar panels
 
 ############################################# Diesel generator constraints ###########################################
 
-def Generator_Bounds_Min(model,s,t): # Maximun energy output of the diesel generator
+def Generator_Bounds_Min_binary(model,s,t): # Maximun energy output of the diesel generator
     ''' 
     This constraint ensure that each segment of the generator does not pass a 
     minimun value.
     :param model: Pyomo model as defined in the Model_creation library.
     '''
-    return model.Last_Energy_Generator[s,t] >= model.Generator_Nominal_Capacity*model.Generator_Min_Out_Put*model.Binary_generator_1[s,t]                                                                                                 
+    return model.Generator_Nominal_Capacity*model.Generator_Min_Out_Put*model.Binary_generator_1[s,t] <= model.Last_Energy_Generator[s,t]                                                                                                
                                                                                                
-def Generator_Cost_1(model,s,t):
+def Generator_Bounds_Max_binary(model,s,t): # Maximun energy output of the diesel generator
+    ''' 
+    This constraint ensure that each segment of the generator does not pass a 
+    minimun value.
+    :param model: Pyomo model as defined in the Model_creation library.
+    '''
+    return model.Last_Energy_Generator[s,t] <= model.Generator_Nominal_Capacity*model.Binary_generator_1[s,t]                                                                                                 
+
+def Generator_Cost_1_binary(model,s,t):
     ''' 
     This constraint calculate the cost of each generator in the time t.
     :param model: Pyomo model as defined in the Model_creation library.
     '''
-    return model.Period_Total_Cost_Generator[s,t] ==  model.Generator_Energy_Integer[s,t]*model.Marginal_Cost_Generator + model.Marginal_Cost_Generator*model.Last_Energy_Generator[s,t]  + model.Binary_generator_1[s,t]*model.Start_Cost_Generator
+    return model.Period_Total_Cost_Generator[s,t] ==  model.Generator_Energy_Integer[s,t]*model.Generator_Nominal_Capacity*model.Marginal_Cost_Generator + model.Marginal_Cost_Generator*model.Last_Energy_Generator[s,t]  + model.Binary_generator_1[s,t]*model.Start_Cost_Generator
 
-def Energy_Genarator_Energy_Max(model,s,t):
+def Energy_Genarator_Energy_Max_binary(model,s,t):
     ''' 
     This constraint ensure that the total energy in the generators does not  pass
     a maximun value.
@@ -46,7 +54,7 @@ def Energy_Genarator_Energy_Max(model,s,t):
     '''
     return model.Generator_Total_Period_Energy[s,t] <= model.Generator_Nominal_Capacity*model.Integer_generator
         
-def Total_Cost_Generator(model,s):
+def Total_Cost_Generator_binary(model,s):
     ''' 
     This constraint calculated the total cost of the generator
     :param model: Pyomo model as defined in the Model_creation library.
@@ -56,12 +64,12 @@ def Total_Cost_Generator(model,s):
         Foo.append((s,r))
     return model.Total_Cost_Generator[s] == sum(model.Period_Total_Cost_Generator[s,t] for s,t in Foo) 
 
-def Generator_Total_Period_Energy(model,s,t):
+def Generator_Total_Period_Energy_binary(model,s,t):
    ''' 
    This constraint calculated the energy in the period t of the generator.
    :param model: Pyomo model as defined in the Model_creation library.
    '''   
-   return model.Generator_Total_Period_Energy[s,t] == model.Generator_Energy_Integer + model.Last_Energy_Generator
+   return model.Generator_Total_Period_Energy[s,t] == model.Generator_Energy_Integer[s,t]*model.Generator_Nominal_Capacity + model.Last_Energy_Generator[s,t]
 
 ############################################# Battery constraints ####################################################
 
@@ -180,6 +188,7 @@ def Scenario_Lost_Load_Cost(model, s):
         foo.append((s,f))
         
     return model.Scenario_Lost_Load_Cost[s] == sum(((sum(model.Lost_Load[s,t]*model.Value_Of_Lost_Load for s,t in foo))/((1+model.Discount_Rate)**model.Project_Years[y])) for y in model.years)
+
 def Sceneario_Generator_Total_Cost(model, s):
     
     return model.Sceneario_Generator_Total_Cost[s] == sum(((model.Total_Cost_Generator[s])/((1+model.Discount_Rate)**model.Project_Years[y])) for y in model.years)

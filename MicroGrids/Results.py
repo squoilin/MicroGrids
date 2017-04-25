@@ -172,8 +172,7 @@ def Load_results2(instance):
     Years=instance.Years.value
     Gen_cap = instance.Generator_Nominal_Capacity.get_values()[None]
     Diesel_Cost = instance.Diesel_Unitary_Cost.value
-    Pricegen = instance.Generator_Invesment_Cost.value
-    
+    Pricegen = instance.Generator_Invesment_Cost.value 
     Initial_Inversion = instance.Initial_Inversion.get_values()[None]
     O_M_Cost = instance.Operation_Maintenance_Cost.get_values()[None]
     Total_Finalcial_Cost = instance.Total_Finalcial_Cost.get_values()[None]
@@ -217,121 +216,136 @@ def Load_results1_binary(instance):
 
 #      Creation of an index starting in the 'model.StartDate' value with a frequency step equal to 'model.Delta_Time'
    
+    Number_Scenarios = int(instance.Scenarios.extract_values()[None])
+    Number_Periods = int(instance.Periods.extract_values()[None])
+    
+    #Scenarios = [[] for i in range(Number_Scenarios)]
+    
+    columns = []
+    for i in range(1, Number_Scenarios+1):
+        columns.append('Scenario_'+str(i))
+
+#    columns=columns
+    Scenarios = pd.DataFrame()
+    
+     
+    Lost_Load = instance.Lost_Load.get_values()
+    PV_Energy = instance.Total_Energy_PV.get_values()
+    Battery_Flow_Out = instance.Energy_Battery_Flow_Out.get_values()
+    Battery_Flow_in = instance.Energy_Battery_Flow_In.get_values()
+    Curtailment = instance.Energy_Curtailment.get_values()
+    Energy_Demand = instance.Energy_Demand.extract_values()
+    SOC = instance.State_Of_Charge_Battery.get_values()
+    Gen_Energy_Integer = instance.Generator_Energy_Integer.get_values()
+    Gen_Energy_I = {}
+    
+    for i in range(1,Number_Scenarios+1):
+        for j in range(1, Number_Periods+1):
+            Gen_Energy_I[i,j]=(Gen_Energy_Integer[i,j]*instance.Generator_Nominal_Capacity.extract_values()[None])        
+    
+    Last_Generator_Energy = instance.Last_Energy_Generator.get_values()        
+    Total_Generator_Energy = instance.Generator_Total_Period_Energy.get_values() 
+            
+    Scenarios_Periods = [[] for i in range(Number_Scenarios)]
+    
+    for i in range(0,Number_Scenarios):
+        for j in range(1, Number_Periods+1):
+            Scenarios_Periods[i].append((i+1,j))
+    foo=0        
+    for i in columns:
+        Information = [[] for i in range(10)]
+        for j in  Scenarios_Periods[foo]:
+            Information[0].append(Lost_Load[j])
+            Information[1].append(PV_Energy[j]) 
+            Information[2].append(Battery_Flow_Out[j]) 
+            Information[3].append(Battery_Flow_in[j]) 
+            Information[4].append(Curtailment[j]) 
+            Information[5].append(Energy_Demand[j]) 
+            Information[6].append(SOC[j])
+            Information[7].append(Gen_Energy_I[j])
+            Information[8].append(Last_Generator_Energy[j])
+            Information[9].append(Total_Generator_Energy[j])
+        
+        Scenarios=Scenarios.append(Information)
+        foo+=1
+    
+    index=[]  
+    for j in range(1, Number_Scenarios+1):   
+       index.append('Lost_Load '+str(j))
+       index.append('PV_Energy '+str(j))
+       index.append('Battery_Flow_Out '+str(j)) 
+       index.append('Battery_Flow_in '+str(j))
+       index.append('Curtailment '+str(j))
+       index.append('Energy_Demand '+str(j))
+       index.append('SOC '+str(j))
+       index.append('Gen energy Integer '+str(j))
+       index.append('Last Generator Energy '+str(j))
+       index.append('Total Generator Energy '+str(j))
+    Scenarios.index= index
+     
+    
+   
+   
+     # Creation of an index starting in the 'model.StartDate' value with a frequency step equal to 'model.Delta_Time'
     if instance.Delta_Time() >= 1 and type(instance.Delta_Time()) == type(1.0) : # if the step is in hours and minutes
         foo = str(instance.Delta_Time()) # trasform the number into a string
         hour = foo[0] # Extract the first character
         minutes = str(int(float(foo[1:3])*60)) # Extrac the last two character
-        index_values = pd.DatetimeIndex(instance.StartDate(), 
-                                        periods=instance.t(), freq=(hour + 
-                                        'h'+ minutes + 'min')) # Creation of an index with a start date and a frequency
+        columns = pd.DatetimeIndex(start=instance.StartDate(), 
+                                   periods=instance.Periods(), 
+                                   freq=(hour + 'h'+ minutes + 'min')) # Creation of an index with a start date and a frequency
     elif instance.Delta_Time() >= 1 and type(instance.Delta_Time()) == type(1): # if the step is in hours
-        index_values = pd.DatetimeIndex(start=instance.StartDate(), 
-                                        periods=instance.Periods(), 
-                                        freq=(str(instance.Delta_Time()) + 'h')) # Creation of an index with a start date and a frequency
+        columns = pd.DatetimeIndex(start=instance.StartDate(), 
+                                   periods=instance.Periods(), 
+                                   freq=(str(instance.Delta_Time()) + 'h')) # Creation of an index with a start date and a frequency
     else: # if the step is in minutes
-        index_values = pd.DatetimeIndex(start=instance.StartDate(), 
-                                        periods=instance.t(), 
-                                        freq=(str(int(instance.Delta_Time()*60)) 
-                                        + 'min'))# Creation of an index with a start date and a frequency
+        columns = pd.DatetimeIndex(start=instance.StartDate(), 
+                                   periods=instance.Periods(), 
+                                   freq=(str(int(instance.Delta_Time()*60)) + 'min'))# Creation of an index with a start date and a frequency
     
-    Columns = []
-    for i in range(1,instance.Number_Generator.extract_values()[None]+1):
-        Columns.append('Generator_'+str(i)+'_'+str(1))
-        Columns.append('Generator_'+str(i)+'_'+str(2))
-    # Load the variables that depend of the periods in python dyctionarys a
-    L_L = instance.Lost_Load.get_values()
-    Pv = instance.Total_Energy_PV.get_values()
-    Cu = instance.Energy_Curtailment.get_values()
-    B_O = instance.Energy_Battery_Flow_Out.get_values() 
-    B_I = instance.Energy_Battery_Flow_In.get_values()
-    G_E = instance.Generator_Total_Period_Energy.get_values()
-    De = instance.Energy_Demand.extract_values()
-    soc = instance.State_Of_Charge_Battery.get_values()
-    G_C = instance.Period_Total_Cost_Generator.get_values()
+    Scenarios.columns = columns
+    Scenarios = Scenarios.transpose()
     
-    for s in range(1,instance.Scenarios.extract_values()[None]+1):
-        Lost_Load = []
-        Energy_PV = []
-        Curtailment = []
-        Discharge_Energy = []
-        Charge_Energy = []
-        Generator_Energy = []
-        Demand=[]
-        SoC = [] 
-        Generator_Cost = []
-        for t in range(1,instance.Periods.extract_values()[None]+1):
-#            for i in range(1, instance.Number_Generator.extract_values()[None]+1):
-#                for j in range(1,3):
-                    Lost_Load.append( L_L[s,t])
-                    Energy_PV.append(Pv[s,t])
-                    Curtailment.append(Cu[s,t])
-                    Discharge_Energy.append(B_O[s,t])
-                    Charge_Energy.append(B_I[s,t])
-                    Generator_Energy.append(G_E[s,t])
-                    Demand.append(De[s,t])
-                    SoC.append(soc[s,t])
-                    Generator_Cost.append(G_C[s,t])
-        data = [Lost_Load,Energy_PV,Curtailment,Discharge_Energy,Charge_Energy,
-                Generator_Energy, Demand, SoC,Generator_Cost] # Loading the values to a numpy array
-        data = list(map(list, zip(*data)))
-        Time_Series = pd.DataFrame(data ,columns=['Lost Load', 'Energy PV','Curtailment',
-                                                  'Discharge energy from the Battery', 
-                                                  'Charge energy to the Battery', 
-                                                  'Energy Diesel',
-                                                  'Energy_Demand',  
-                                                  'State_Of_Charge_Battery',
-                                                  'Generator Period Cost'],
-                                                  index=index_values)
+    Scenarios.to_excel('Results/Time_Series.xls') # Creating an excel file with the values of the variables that are in function of the periods
+    
+    columns = [] # arreglar varios columns
+    for i in range(1, Number_Scenarios+1):
+        columns.append('Scenario_'+str(i))
         
-        Time_Series.to_excel('Results/Time_Series_+'+str(s) +'.xls') # Creating an excel file with the values of the variables that are in function of the periods
+    Scenario_information =[[] for i in range(Number_Scenarios)]
+    Scenario_NPC = instance.Scenario_Net_Present_Cost.get_values()
+    LoL_Cost = instance.Scenario_Lost_Load_Cost.get_values() 
+    Scenario_Weight = instance.Scenario_Weight.extract_values()
+    Diesel_Cost = instance.Sceneario_Generator_Total_Cost.get_values()
     
-      
-    Energy_Generator = instance.Generator_Energy_1.get_values()           
-    Period_Cost_Generator= instance.Period_Cost_Generator_1.get_values() 
-    
-    Generator_Cost_Period = pd.DataFrame(index=index_values)
-    Generator_Energy = pd.DataFrame(index=index_values)
-    
-    for s in range(1,instance.Scenarios.extract_values()[None]+1): 
-        Generator_Cost_Period = pd.DataFrame(index=index_values)
-        Generator_Energy = pd.DataFrame(index=index_values)
-        
-        for i in range(1, instance.Number_Generator.extract_values()[None]+1):
-            for j in range(1, 3):
-                Generator = []
-                Period_Cost = []  
-                for t in range(1,instance.Periods.extract_values()[None]+1):
-                    Generator.append(Energy_Generator[(s,t,i,j)])
-                    Period_Cost.append(Period_Cost_Generator[(s,t,i,j)])
-                Generator_Cost_Period['S'+str(s) +' Gen '+str(i)+str(j)]=Generator
-                Generator_Energy['S'+str(s) +' Gen '+str(i)+str(j)]=Period_Cost
+    for i in range(1, Number_Scenarios+1):
+        Scenario_information[i-1].append(Scenario_NPC[i])
+        Scenario_information[i-1].append(LoL_Cost[i])
+        Scenario_information[i-1].append(Scenario_Weight[i])
+        Scenario_information[i-1].append(Diesel_Cost[i])
     
     
-        Generator_Cost_Period.to_excel('Results/Generator_Energy S'+str(s)+'.xls')
-        Generator_Energy.to_excel('Results/Generators_Costs S'+str(s)+'.xls')
+    Scenario_Information = pd.DataFrame(Scenario_information,index=columns)
+    Scenario_Information.columns=['Scenario NPC', 'LoL Cost','Scenario Weight', 'Diesel Cost']
+    Scenario_Information = Scenario_Information.transpose()
     
-    index=[]
-    for i in range(1, instance.Number_Generator.extract_values()[None]+1):
-            for j in range(1, 3):
-                index.append((i,j))
+    Scenario_Information.to_excel('Results/Scenario_Information.xls')
     
+    S = instance.PlotScenario.value
+    Time_Series = pd.DataFrame(index=range(0,8760))
+    Time_Series.index = Scenarios.index
     
-    cost_origins = instance.Cost_Origins.extract_values()
-    Cost_Origins = pd.DataFrame(columns=['Origins'],index= index)
-    for i in range(1, instance.Number_Generator.extract_values()[None]+1):
-            for j in range(1, 3):
-                Cost_Origins['Origins'][i,j]=cost_origins[i,j]
-    Cost_Origins=Cost_Origins.transpose()
-    Cost_Origins.to_excel('Results/Origins.xls')
-     
+    Time_Series['Lost Load'] = Scenarios['Lost_Load '+str(S)]
+    Time_Series['Energy PV'] = Scenarios['PV_Energy '+str(S)]
+    Time_Series['Discharge energy from the Battery'] = Scenarios['Battery_Flow_Out '+str(S)] 
+    Time_Series['Charge energy to the Battery'] = Scenarios['Battery_Flow_in '+str(S)]
+    Time_Series['Curtailment'] = Scenarios['Curtailment '+str(S)]
+    Time_Series['Energy_Demand'] = Scenarios['Energy_Demand '+str(S)]
+    Time_Series['State_Of_Charge_Battery'] = Scenarios['SOC '+str(S)]
+    Time_Series['Gen energy Integer'] = Scenarios['Gen energy Integer '+str(S)]
+    Time_Series['Last Generator Energy'] = Scenarios['Last Generator Energy ' +str(j)]    
+    Time_Series['Energy Diesel'] = Scenarios['Total Generator Energy '+str(j)]
     
-    
-    Percentage = instance.Scenario_Weight.extract_values()
-    Scenario_Weight = pd.DataFrame(columns=['Scenario Weight'],index= range(1,
-                                   instance.Scenarios.extract_values()[None]+1))
-    for i in range(1,instance.Scenarios.extract_values()[None]+1):
-        Scenario_Weight['Scenario Weight'][i] = Percentage[i]
-    Scenario_Weight.to_excel('Results/Scenario Weight.xls')
     
     return Time_Series
     
@@ -348,19 +362,19 @@ def Load_results2_binary(instance):
     :return: Data frame called Size_variables with the variables values. 
     '''
     # Load the variables that doesnot depend of the periods in python dyctionarys
-    ca = instance.Cost_Financial.get_values()
+    Amortizacion = instance.Cost_Financial.get_values()[None]
     cb = instance.PV_Units.get_values()
     cb = cb.values()
-    cb=[list(cb)[0]*instance.PV_Nominal_Capacity.value]
-    cc = instance.Battery_Nominal_Capacity.get_values()
+    Size_PV=[list(cb)[0]*instance.PV_Nominal_Capacity.value]
+    Size_Bat = instance.Battery_Nominal_Capacity.get_values()[None]
     cd = [instance.Generator_Nominal_Capacity.value] 
     Number_Generators = instance.Integer_generator.get_values()
     Number_Generators = Number_Generators.values()
     Number_Generators=list(Number_Generators)
     cd= Number_Generators[0]*cd[0]
     NPC = instance.ObjectiveFuntion.expr()
-    Mge_1 = instance.Marginal_Cost_Generator.extract_values()[1]
-    Mge_2 = instance.Marginal_Cost_Generator.extract_values()[2]
+    Mge_1 = instance.Marginal_Cost_Generator.value
+    Start_Cost = instance.Start_Cost_Generator.value
     Funded= instance.Porcentage_Funded.value
     DiscountRate = instance.Discount_Rate.value
     InterestRate = instance.Interest_Rate_Loan.value
@@ -370,14 +384,14 @@ def Load_results2_binary(instance):
     OM = instance.Maintenance_Operation_Cost_PV.value
     Years=instance.Years.value
     VOLL= instance.Value_Of_Lost_Load.value
-    data3 = [ca[None], cb[0], cc[None], cd ,NPC,Mge_1 ,Mge_2,
+    data3 = [Amortizacion, Size_PV[0], Size_Bat, cd ,NPC,Mge_1 , Start_Cost,
             Funded,DiscountRate,InterestRate,PricePV,PriceBatery,
             PriceGenSet,OM,Years,VOLL] # Loading the values to a numpy array  
     Size_variables = pd.DataFrame(data3,index=['Amortization', 'Size of the solar panels', 
                                                'Size of the Battery',
                                                'Nominal Capacity Generator',
-                                               'Net Present Cost','Marginal cost 1', 
-                                               'Marginal cost 2', 'Funded Porcentage', 
+                                               'Net Present Cost','Marginal cost', 'Start Cost',
+                                               'Funded Porcentage', 
                                                'Discount Rate', 'Interest Rate','Precio PV', 
                                                'Precio Bateria','Precio GenSet','OyM',
                                                'Project years','VOLL'])

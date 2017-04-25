@@ -124,13 +124,11 @@ def Model_Creation_binary(model):
     model.StartDate = Param() # Start date of the analisis
     model.PlotTime = Param() # Quantity of days that are going to be plot
     model.PlotDay = Param() # Start day for the plot
-    model.Number_Generator=Param() #Quantity of generators
     model.Scenarios = Param()  
-    
+    model.PlotScenario = Param()
     #SETS
     model.periods = RangeSet(1, model.Periods) # Creation of a set from 1 to the number of periods in each year
     model.years = RangeSet(1, model.Years) # Creation of a set from 1 to the number of years of the project
-    model.Generators = RangeSet(1,model.Number_Generator)
     model.Slops = RangeSet(1,2)
     model.scenario = RangeSet(1, model.Scenarios) # Creation of a set from 1 to the numbero scenarios to analized
     
@@ -160,7 +158,7 @@ def Model_Creation_binary(model):
     model.Generator_Invesment_Cost = Param(within=NonNegativeReals) # Cost of the diesel generator  
     model.Marginal_Cost_Generator = Param(initialize=Marginal_Cost_Generator )
     model.Generator_Nominal_Capacity = Param(within=NonNegativeReals)
-    model.Start_Cost_Generator = Param(within=NonNegativeReals, initialize=Start_Cost )
+    model.Start_Cost_Generator = Param(within=NonNegativeReals, initialize=Start_Cost)
     
     # Parameters of the Energy balance                  
     model.Energy_Demand = Param(model.scenario,model.periods, initialize=Initialize_Demand) # Energy Energy_Demand in W 
@@ -201,8 +199,7 @@ def Model_Creation_binary(model):
     model.Binary_generator_1 = Var(model.scenario,model.periods, within=Binary)
     model.Integer_generator = Var(within=PositiveIntegers)
     model.Total_Cost_Generator = Var(model.scenario,within=NonNegativeReals)  
-    model.Generator_Total_Period_Energy = Var(model.scenario,model.periods, within=NonNegativeReals)  
-    
+    model.Generator_Total_Period_Energy = Var(model.scenario,model.periods, within=NonNegativeReals)   
     model.Generator_Energy_Integer = Var(model.scenario, model.periods, within=PositiveIntegers)
     model.Last_Energy_Generator = Var(model.scenario, model.periods, within=NonNegativeReals)
     
