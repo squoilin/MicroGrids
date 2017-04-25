@@ -245,7 +245,8 @@ def Load_results1_binary(instance):
     
     Last_Generator_Energy = instance.Last_Energy_Generator.get_values()        
     Total_Generator_Energy = instance.Generator_Total_Period_Energy.get_values() 
-            
+    Gen_cost = instance.Period_Total_Cost_Generator.get_values()       
+    
     Scenarios_Periods = [[] for i in range(Number_Scenarios)]
     
     for i in range(0,Number_Scenarios):
@@ -253,7 +254,7 @@ def Load_results1_binary(instance):
             Scenarios_Periods[i].append((i+1,j))
     foo=0        
     for i in columns:
-        Information = [[] for i in range(10)]
+        Information = [[] for i in range(11)]
         for j in  Scenarios_Periods[foo]:
             Information[0].append(Lost_Load[j])
             Information[1].append(PV_Energy[j]) 
@@ -265,6 +266,7 @@ def Load_results1_binary(instance):
             Information[7].append(Gen_Energy_I[j])
             Information[8].append(Last_Generator_Energy[j])
             Information[9].append(Total_Generator_Energy[j])
+            Information[10].append(Gen_cost[j])
         
         Scenarios=Scenarios.append(Information)
         foo+=1
@@ -281,6 +283,7 @@ def Load_results1_binary(instance):
        index.append('Gen energy Integer '+str(j))
        index.append('Last Generator Energy '+str(j))
        index.append('Total Generator Energy '+str(j))
+       index.append('Total Cost Generator'+str(j))
     Scenarios.index= index
      
     

@@ -24,7 +24,7 @@ param: Maintenance_Operation_Cost_Battery:= 0.015;
 
 param: Maintenance_Operation_Cost_Generator := 0.015;
 
-param: Diesel_Cost := 0.48;
+param: Diesel_Cost := 0.18;
 
 param: Discount_Rate := 0.12;
 
@@ -60,7 +60,7 @@ param: Generator_Effiency:= 0.33;
 
 param: Generator_Min_Out_Put:= 0.3; 
 
-param: Generator_Nominal_Capacity := 4700000;
+param: Generator_Nominal_Capacity := 3300000;
 
 param: Scenarios :=1;
 

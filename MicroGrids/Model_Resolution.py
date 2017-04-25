@@ -74,7 +74,7 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
     Financial_Cost, Energy_balance, Maximun_Lost_Load, Generator_Cost_1_binary, Energy_Genarator_Energy_Max_binary, \
     Total_Cost_Generator_binary, Initial_Inversion, Operation_Maintenance_Cost,Total_Finalcial_Cost,\
     Battery_Reposition_Cost, Scenario_Lost_Load_Cost, Sceneario_Generator_Total_Cost, \
-    Scenario_Net_Present_Cost, Generator_Bounds_Min_binary, Generator_Total_Period_Energy_binary, Generator_Bounds_Max_binary
+    Scenario_Net_Present_Cost, Generator_Bounds_Min_binary, Generator_Total_Period_Energy_binary, Generator_Bounds_Max_binary,b
 
     # OBJETIVE FUNTION:
     model.ObjectiveFuntion = Objective(rule=Net_Present_Cost, sense=minimize)  
@@ -101,6 +101,7 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
     model.EnergyGenaratorEnergyMax = Constraint(model.scenario,model.periods, rule=Energy_Genarator_Energy_Max_binary)
     model.TotalCostGenerator = Constraint(model.scenario, rule=Total_Cost_Generator_binary)
     model.GeneratorTotalPeriodEnergy = Constraint(model.scenario,model.periods, rule=Generator_Total_Period_Energy_binary)
+#    model.bo = Constraint(model.scenario,model.periods, rule=b)
     # Financial Constraints
     model.FinancialCost = Constraint(rule=Financial_Cost) # Financial cost
     model.InitialInversion = Constraint(rule=Initial_Inversion)

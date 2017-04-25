@@ -100,8 +100,6 @@ def Model_Creation(model):
     model.Operation_Maintenance_Cost = Var(within=NonNegativeReals)
     model.Total_Finalcial_Cost = Var(within=NonNegativeReals)
     model.Battery_Reposition_Cost = Var(within=NonNegativeReals)
-#    model.Lost_Load_Total_Cost = Var(model.scenario, within=NonNegativeReals)
-#    
 
 
 
@@ -115,7 +113,7 @@ def Model_Creation_binary(model):
     :param model: Pyomo model as defined in the Micro-Grids library.
     
     '''
-    from pyomo.environ import  Param, RangeSet, NonNegativeReals, Var, Binary, PositiveIntegers
+    from pyomo.environ import  Param, RangeSet, NonNegativeReals, Var, Binary, NonNegativeIntegers
     from Initialize import Initialize_years, Initialize_Demand, Initialize_PV_Energy, Marginal_Cost_Generator, Start_Cost # Import library with initialitation funtions for the parameters
    
     # Time parameters
@@ -193,14 +191,12 @@ def Model_Creation_binary(model):
      # Variables associated to the diesel generator
     
     model.Period_Total_Cost_Generator = Var(model.scenario,model.periods, within=NonNegativeReals)    
-    model.Period_Cost_Generator_1 = Var(model.scenario,model.periods, within=NonNegativeReals)
     model.Energy_Generator_Total = Var(model.scenario, model.periods, within=NonNegativeReals)
-    model.Generator_Energy_1 = Var(model.scenario,model.periods, within=NonNegativeReals)
     model.Binary_generator_1 = Var(model.scenario,model.periods, within=Binary)
-    model.Integer_generator = Var(within=PositiveIntegers)
+    model.Integer_generator = Var(within=NonNegativeIntegers)
     model.Total_Cost_Generator = Var(model.scenario,within=NonNegativeReals)  
     model.Generator_Total_Period_Energy = Var(model.scenario,model.periods, within=NonNegativeReals)   
-    model.Generator_Energy_Integer = Var(model.scenario, model.periods, within=PositiveIntegers)
+    model.Generator_Energy_Integer = Var(model.scenario, model.periods, within=NonNegativeIntegers)
     model.Last_Energy_Generator = Var(model.scenario, model.periods, within=NonNegativeReals)
     
     # Varialbles associated to the energy balance

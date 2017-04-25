@@ -71,6 +71,10 @@ def Generator_Total_Period_Energy_binary(model,s,t):
    '''   
    return model.Generator_Total_Period_Energy[s,t] == model.Generator_Energy_Integer[s,t]*model.Generator_Nominal_Capacity + model.Last_Energy_Generator[s,t]
 
+def b(model,s,t):
+    return model.Generator_Energy_Integer[1,1] ==0
+
+
 ############################################# Battery constraints ####################################################
 
 def State_of_Charge(model,s,t): # State of Charge of the battery
@@ -174,7 +178,9 @@ def Initial_Inversion(model):
     return model.Initial_Inversion == (model.PV_Units*model.PV_invesment_Cost*model.PV_Nominal_Capacity + model.Battery_Nominal_Capacity*model.Battery_Invesment_Cost + model.Generator_Invesment_Cost*model.Generator_Nominal_Capacity*model.Integer_generator)*(1-model.Porcentage_Funded) 
 
 def Operation_Maintenance_Cost(model):
-    return model.Operation_Maintenance_Cost == sum(((model.PV_Units*model.PV_invesment_Cost*model.PV_Nominal_Capacity*model.Maintenance_Operation_Cost_PV + model.Battery_Nominal_Capacity*model.Battery_Invesment_Cost*model.Maintenance_Operation_Cost_Battery+ model.Generator_Invesment_Cost*model.Generator_Nominal_Capacity*model.Integer_generator*model.Maintenance_Operation_Cost_Generator)/((1+model.Discount_Rate)**model.Project_Years[y])) for y in model.years)     
+    return model.Operation_Maintenance_Cost == sum(((model.PV_Units*model.PV_invesment_Cost*model.PV_Nominal_Capacity*model.Maintenance_Operation_Cost_PV 
+                                                     + model.Battery_Nominal_Capacity*model.Battery_Invesment_Cost*model.Maintenance_Operation_Cost_Battery
+                                                     + model.Generator_Invesment_Cost*model.Generator_Nominal_Capacity*model.Integer_generator*model.Maintenance_Operation_Cost_Generator)/((1+model.Discount_Rate)**model.Project_Years[y])) for y in model.years)     
 
 def Total_Finalcial_Cost(model):
     return model.Total_Finalcial_Cost == sum((model.Cost_Financial/((1+model.Discount_Rate)**model.Project_Years[y])) for y  in model.years) 
