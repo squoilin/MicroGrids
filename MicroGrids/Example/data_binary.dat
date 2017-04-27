@@ -58,14 +58,16 @@ param: Battery_Reposition_Time := 10;
 
 param: Generator_Effiency:= 0.33;
 
-param: Generator_Min_Out_Put:= 0.3; 
+param: Generator_Min_Out_Put:= 0.01; 
 
-param: Generator_Nominal_Capacity := 3300000;
+param: Generator_Nominal_Capacity := 4650000;
 
-param: Scenarios :=1;
+param: Scenarios :=3;
 
 param: Scenario_Weight :=
 
-1   1;
+1   0.33
+2   0.33
+3   0.34;
 
 
