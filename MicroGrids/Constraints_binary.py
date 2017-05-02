@@ -44,7 +44,7 @@ def Generator_Cost_1_binary(model,s,t):
     This constraint calculate the cost of each generator in the time t.
     :param model: Pyomo model as defined in the Model_creation library.
     '''
-    return model.Period_Total_Cost_Generator[s,t] ==  model.Generator_Energy_Integer[s,t]*model.Generator_Nominal_Capacity*model.Marginal_Cost_Generator + model.Marginal_Cost_Generator*model.Last_Energy_Generator[s,t]  + model.Binary_generator_1[s,t]*model.Start_Cost_Generator
+    return model.Period_Total_Cost_Generator[s,t] ==  model.Generator_Energy_Integer[s,t]*model.Generator_Nominal_Capacity*model.Marginal_Cost_Generator_1 + model.Marginal_Cost_Generator*model.Last_Energy_Generator[s,t]  + model.Binary_generator_1[s,t]*model.Start_Cost_Generator
 
 def Energy_Genarator_Energy_Max_binary(model,s,t):
     ''' 
@@ -70,9 +70,6 @@ def Generator_Total_Period_Energy_binary(model,s,t):
    :param model: Pyomo model as defined in the Model_creation library.
    '''   
    return model.Generator_Total_Period_Energy[s,t] == model.Generator_Energy_Integer[s,t]*model.Generator_Nominal_Capacity + model.Last_Energy_Generator[s,t]
-
-def b(model,s,t):
-    return model.Generator_Energy_Integer[1,1] ==0
 
 
 ############################################# Battery constraints ####################################################

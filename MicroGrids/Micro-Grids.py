@@ -10,11 +10,11 @@ from Economical_Analysis import Levelized_Cost_Of_Energy
 
 
 # Type of problem formulation:
-formulation='LP'
+formulation='Binary'
 
 model = AbstractModel() # define type of optimization problem
 
-if formulation == 'Binary':
+if formulation == 'LP':
     # Optimization model
     Model_Creation(model) # Creation of the Sets, parameters and variables.
     instance = Model_Resolution(model) # Resolution of the instance

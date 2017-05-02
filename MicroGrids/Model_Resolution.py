@@ -71,10 +71,10 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
     '''
     from Constraints_binary import  Net_Present_Cost, Solar_Energy, State_of_Charge, Maximun_Charge, \
     Minimun_Charge, Max_Power_Battery_Charge, Max_Power_Battery_Discharge, Max_Bat_in, Max_Bat_out, \
-    Financial_Cost, Energy_balance, Maximun_Lost_Load, Generator_Cost_1_binary, Energy_Genarator_Energy_Max_binary, \
+    Financial_Cost, Energy_balance, Maximun_Lost_Load, Generator_Cost_1_binary, Generator_Total_Period_Energy_binary, \
     Total_Cost_Generator_binary, Initial_Inversion, Operation_Maintenance_Cost,Total_Finalcial_Cost,\
     Battery_Reposition_Cost, Scenario_Lost_Load_Cost, Sceneario_Generator_Total_Cost, \
-    Scenario_Net_Present_Cost, Generator_Bounds_Min_binary, Generator_Total_Period_Energy_binary, Generator_Bounds_Max_binary,b
+    Scenario_Net_Present_Cost, Generator_Bounds_Min_binary, Generator_Bounds_Max_binary,Energy_Genarator_Energy_Max_binary
 
     # OBJETIVE FUNTION:
     model.ObjectiveFuntion = Objective(rule=Net_Present_Cost, sense=minimize)  
@@ -100,8 +100,8 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
     model.GeneratorCost1 = Constraint(model.scenario, model.periods,  rule=Generator_Cost_1_binary)
     model.EnergyGenaratorEnergyMax = Constraint(model.scenario,model.periods, rule=Energy_Genarator_Energy_Max_binary)
     model.TotalCostGenerator = Constraint(model.scenario, rule=Total_Cost_Generator_binary)
-    model.GeneratorTotalPeriodEnergy = Constraint(model.scenario,model.periods, rule=Generator_Total_Period_Energy_binary)
-#    model.bo = Constraint(model.scenario,model.periods, rule=b)
+    model.GeneratorTotalPeriodEnergybinary = Constraint(model.scenario,model.periods, rule=Generator_Total_Period_Energy_binary) 
+    
     # Financial Constraints
     model.FinancialCost = Constraint(rule=Financial_Cost) # Financial cost
     model.InitialInversion = Constraint(rule=Initial_Inversion)
@@ -117,7 +117,7 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
     opt = SolverFactory('cplex') # Solver use during the optimization    
 #    opt.options['emphasis_memory'] = 'y'
 #    opt.options['node_select'] = 3
-    results = opt.solve(instance, tee=True,options_string="mipgap=0.1") # Solving a model instance 
+    results = opt.solve(instance, tee=True,options_string="mipgap=0.05") # Solving a model instance 
 
     #    instance.write(io_options={'emphasis_memory':True})
     #options_string="mipgap=0.03", timelimit=1200

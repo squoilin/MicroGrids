@@ -114,7 +114,7 @@ def Model_Creation_binary(model):
     
     '''
     from pyomo.environ import  Param, RangeSet, NonNegativeReals, Var, Binary, NonNegativeIntegers
-    from Initialize import Initialize_years, Initialize_Demand, Initialize_PV_Energy, Marginal_Cost_Generator, Start_Cost # Import library with initialitation funtions for the parameters
+    from Initialize import Initialize_years, Initialize_Demand, Initialize_PV_Energy, Marginal_Cost_Generator, Start_Cost,Marginal_Cost_Generator_1 # Import library with initialitation funtions for the parameters
    
     # Time parameters
     model.Periods = Param(within=NonNegativeReals) # Number of periods of analysis of the energy variables
@@ -154,10 +154,11 @@ def Model_Creation_binary(model):
     model.Low_Heating_Value = Param() # Low heating value of the diesel in W/L
     model.Diesel_Cost = Param(within=NonNegativeReals) # Cost of diesel in USD/L
     model.Generator_Invesment_Cost = Param(within=NonNegativeReals) # Cost of the diesel generator  
-    model.Marginal_Cost_Generator = Param(initialize=Marginal_Cost_Generator )
+    model.Marginal_Cost_Generator_1 = Param(initialize=Marginal_Cost_Generator_1)
+    model.Cost_Increase = Param(within=NonNegativeReals)
     model.Generator_Nominal_Capacity = Param(within=NonNegativeReals)
-    model.Start_Cost_Generator = Param(within=NonNegativeReals, initialize=Start_Cost)
-    
+    model.Start_Cost_Generator = Param(within=NonNegativeReals, initialize=Start_Cost)  
+    model.Marginal_Cost_Generator = Param(initialize=Marginal_Cost_Generator)
     # Parameters of the Energy balance                  
     model.Energy_Demand = Param(model.scenario,model.periods, initialize=Initialize_Demand) # Energy Energy_Demand in W 
     model.Lost_Load_Probability = Param() # Lost load probability in %

@@ -370,13 +370,10 @@ def Load_results2_binary(instance):
     cb = cb.values()
     Size_PV=[list(cb)[0]*instance.PV_Nominal_Capacity.value]
     Size_Bat = instance.Battery_Nominal_Capacity.get_values()[None]
-    cd = [instance.Generator_Nominal_Capacity.value] 
-    Number_Generators = instance.Integer_generator.get_values()
-    Number_Generators = Number_Generators.values()
-    Number_Generators=list(Number_Generators)
-    cd= Number_Generators[0]*cd[0]
+    Gen_cap = instance.Generator_Nominal_Capacity.value
+    Gen_Power = Gen_cap*instance.Integer_generator.get_values()[None]
     NPC = instance.ObjectiveFuntion.expr()
-    Mge_1 = instance.Marginal_Cost_Generator.value
+    Mge_1 = instance.Marginal_Cost_Generator_1.value
     Start_Cost = instance.Start_Cost_Generator.value
     Funded= instance.Porcentage_Funded.value
     DiscountRate = instance.Discount_Rate.value
@@ -387,17 +384,18 @@ def Load_results2_binary(instance):
     OM = instance.Maintenance_Operation_Cost_PV.value
     Years=instance.Years.value
     VOLL= instance.Value_Of_Lost_Load.value
-    data3 = [Amortizacion, Size_PV[0], Size_Bat, cd ,NPC,Mge_1 , Start_Cost,
-            Funded,DiscountRate,InterestRate,PricePV,PriceBatery,
+    Mge_2 = instance.Marginal_Cost_Generator.value
+    data3 = [Amortizacion, Size_PV[0], Size_Bat, Gen_cap, Gen_Power,NPC,Mge_1, Mge_2 , 
+            Start_Cost, Funded,DiscountRate,InterestRate,PricePV,PriceBatery,
             PriceGenSet,OM,Years,VOLL] # Loading the values to a numpy array  
     Size_variables = pd.DataFrame(data3,index=['Amortization', 'Size of the solar panels', 
-                                               'Size of the Battery',
-                                               'Nominal Capacity Generator',
-                                               'Net Present Cost','Marginal cost', 'Start Cost',
-                                               'Funded Porcentage', 
-                                               'Discount Rate', 'Interest Rate','Precio PV', 
-                                               'Precio Bateria','Precio GenSet','OyM',
-                                               'Project years','VOLL'])
+                                               'Size of the Battery','Nominal Capacity Generator',
+                                               'Generator Install power','Net Present Cost',
+                                               'Marginal cost Full load',
+                                               'Marginal cost Partial load', 'Start Cost',
+                                               'Funded Porcentage', 'Discount Rate', 
+                                               'Interest Rate','Precio PV', 'Precio Bateria',
+                                               'Precio GenSet','OyM', 'Project years','VOLL'])
     Size_variables.to_excel('Results/Size.xls') # Creating an excel file with the values of the variables that does not depend of the periods
     
     I_Inv = instance.Initial_Inversion.get_values()[None] 

@@ -38,11 +38,15 @@ def Initialize_PV_Energy(model, i, t):
     '''
     return float(PV_Energy[i][t])
 
-def Marginal_Cost_Generator(model):
+def Marginal_Cost_Generator_1(model):
     
     return model.Diesel_Cost/(model.Low_Heating_Value*model.Generator_Effiency)
 
 def Start_Cost(model):
     
-    return (model.Diesel_Cost*model.Generator_Nominal_Capacity*model.Generator_Min_Out_Put)/(model.Low_Heating_Value*model.Generator_Effiency)
+    return model.Marginal_Cost_Generator_1*model.Generator_Nominal_Capacity*model.Cost_Increase
+
+def Marginal_Cost_Generator(model):
+    
+    return (model.Marginal_Cost_Generator_1*model.Generator_Nominal_Capacity-model.Start_Cost_Generator)/model.Generator_Nominal_Capacity 
     
