@@ -3,14 +3,14 @@
 import pandas as pd
 from pyomo.environ import  AbstractModel
 
-from Results import Plot_Energy_Total, Load_results1, Load_results2, Load_results1_binary, Load_results2_binary, Percentage_Of_Use, Energy_Flow, Energy_Participation, LDR 
-from Model_Creation import Model_Creation, Model_Creation_binary
-from Model_Resolution import Model_Resolution, Model_Resolution_binary
+from Results import Plot_Energy_Total, Load_results1, Load_results2, Load_results1_binary, Load_results2_binary, Percentage_Of_Use, Energy_Flow, Energy_Participation, LDR, Load_results1_Integer, Load_results2_Integer 
+from Model_Creation import Model_Creation, Model_Creation_binary, Model_Creation_Integer
+from Model_Resolution import Model_Resolution, Model_Resolution_binary, Model_Resolution_Integer
 from Economical_Analysis import Levelized_Cost_Of_Energy
 
 
 # Type of problem formulation:
-formulation='Binary'
+formulation='LP'
 
 model = AbstractModel() # define type of optimization problem
 
@@ -26,7 +26,11 @@ elif formulation == 'Binary':
     instance = Model_Resolution_binary(model) # Resolution of the instance    
     Time_Series = Load_results1_binary(instance) # Extract the results of energy from the instance and save it in a excel file 
     Results = Load_results2_binary(instance) # Save results into a excel file
-
+elif formulation =='Integer':
+    Model_Creation_Integer(model)
+    instance = Model_Resolution_Integer(model)
+    Time_Series = Load_results1_Integer(instance) # Extract the results of energy from the instance and save it in a excel file 
+    Results = Load_results2_Integer(instance)
 # Post procesing tools
 
 Plot_Energy_Total(instance, Time_Series)

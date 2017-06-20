@@ -6,7 +6,7 @@ param: StartDate := '01/01/2014 00:00:00';
 
 param: PlotTime := 1;
 
-param: PlotDay := '11/07/2014 00:00:00';
+param: PlotDay := '06/09/2014 00:00:00';
 
 param: PlotScenario:= 1;
 
@@ -24,7 +24,7 @@ param: Maintenance_Operation_Cost_Battery:= 0.015;
 
 param: Maintenance_Operation_Cost_Generator := 0.015;
 
-param: Diesel_Cost := 1.18;
+param: Diesel_Cost := 0.18;
 
 param: Discount_Rate := 0.12;
 
@@ -56,21 +56,18 @@ param: Battery_Reposition_Time := 10;
 
 # new parameters
 
-param: Generator_Effiency:= 0.33;
+param: Generator_Effiency:= 0.337;
 
 param: Generator_Min_Out_Put:= 0.30; 
 
 param: Cost_Increase := 0.01;
 
-param: Generator_Nominal_Capacity := 3300000;
+param: Generator_Nominal_Capacity := 3100000;
 
-param: Scenarios :=4;
+param: Scenarios :=1;
 
 param: Scenario_Weight :=
 
-1   0.25
-2   0.25
-3   0.25
-4   0.25;
+1   1;
 
 

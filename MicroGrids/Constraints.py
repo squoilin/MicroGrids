@@ -8,7 +8,7 @@ def Net_Present_Cost(model): # OBJETIVE FUNTION: MINIMIZE THE NPC FOR THE SISTEM
     :param model: Pyomo model as defined in the Model_creation library.
     '''
       
-    return sum(model.Scenario_Net_Present_Cost[i]*model.Scenario_Weight[i] for i in model.scenario )
+    return (sum(model.Scenario_Net_Present_Cost[i]*model.Scenario_Weight[i] for i in model.scenario ))
            
 ##################################################### PV constraints##################################################
 

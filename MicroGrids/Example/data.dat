@@ -4,11 +4,11 @@ param: Years := 20;
 
 param: StartDate := '01/01/2011 00:00:00';
 
-param: PlotTime := 2;
+param: PlotTime := 1;
 
-param: PlotDay := '24/02/2011 01:00:00';
+param: PlotDay := '06/12/2011 01:00:00';
 
-param: PlotScenario := 2;
+param: PlotScenario := 1;
 
 param: Delta_Time := 1.0;
 
@@ -40,7 +40,7 @@ param: Deep_of_Discharge := 0.2;
 
 param: Inverter_Efficiency := 0.986;
 
-param: Generator_Efficiency := 0.33;
+param: Generator_Efficiency := 0.3;
 
 param: Low_Heating_Value := 9890;
 
