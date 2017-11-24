@@ -324,3 +324,88 @@ def Model_Creation_Integer(model):
     model.Sceneario_Generator_Total_Cost = Var(model.scenario, within=NonNegativeReals)
     model.Scenario_Net_Present_Cost = Var(model.scenario, within=NonNegativeReals)
 
+    
+def Model_Creation_Dispatch(model):
+    
+    '''
+    This function creates the instance for the resolution of the optimization in Pyomo.
+    The problem is solved by discretizing the efficiency curve of the generators and uses binary variables
+    
+    :param model: Pyomo model as defined in the Micro-Grids library.
+    
+    '''
+    from pyomo.environ import  Param, RangeSet, NonNegativeReals, Var, NonNegativeIntegers
+    from Initialize import Initialize_Demand, Initialize_PV_Energy, Initialize_Demand_Dispatch, Initialize_PV_Energy_Dispatch, Marginal_Cost_Generator, Start_Cost,Marginal_Cost_Generator_1,Max_Power_Battery_Discharge, Max_Power_Battery_Charge # Import library with initialitation funtions for the parameters
+
+    # Time parameters
+    model.Periods = Param(within=NonNegativeReals) # Number of periods of analysis of the energy variables 
+    model.StartDate = Param() # Start date of the analisis
+    model.PlotTime = Param() # Quantity of days that are going to be plot
+    model.PlotDay = Param() # Start day for the plot
+    
+    #SETS
+    model.periods = RangeSet(1, model.Periods) # Creation of a set from 1 to the number of periods in each year   
+    # PARAMETERS
+    
+    # Parameters of the PV 
+
+    model.Total_Energy_PV = Param(model.periods, within=NonNegativeReals, initialize=Initialize_PV_Energy_Dispatch) # Energy produccion of a solar panel in W
+    
+    # Parameters of the battery bank
+    model.Charge_Battery_Efficiency = Param() # Efficiency of the charge of the battery in  %
+    model.Discharge_Battery_Efficiency = Param() # Efficiency of the discharge of the battery in %
+    model.Deep_of_Discharge = Param() # Deep of discharge of the battery (Deep_of_Discharge) in %
+    model.Maximun_Battery_Charge_Time = Param(within=NonNegativeReals) # Minimun time of charge of the battery in hours
+    model.Maximun_Battery_Discharge_Time = Param(within=NonNegativeReals) # Maximun time of discharge of the battery  in hours                     
+    model.Battery_Nominal_Capacity = Param(within=NonNegativeReals) # Capacity of the battery bank in Wh   
+    model.Maximun_Charge_Power= Param(initialize=Max_Power_Battery_Charge) # Maximun charge power in w
+    model.Maximun_Discharge_Power = Param(initialize=Max_Power_Battery_Discharge) #Maximun discharge power in w
+    
+    # Parametes of the diesel generator
+    model.Generator_Effiency = Param(within=NonNegativeReals)
+    model.Generator_Min_Out_Put = Param(within=NonNegativeReals)
+    model.Low_Heating_Value = Param() # Low heating value of the diesel in W/L
+    model.Diesel_Cost = Param(within=NonNegativeReals) # Cost of diesel in USD/L
+    model.Marginal_Cost_Generator_1 = Param(initialize=Marginal_Cost_Generator_1)
+    model.Cost_Increase = Param(within=NonNegativeReals)
+    model.Generator_Nominal_Capacity = Param(within=NonNegativeReals)
+    model.Start_Cost_Generator = Param(within=NonNegativeReals, initialize=Start_Cost)  
+    model.Marginal_Cost_Generator = Param(initialize=Marginal_Cost_Generator)
+    
+    # Parameters of the Energy balance                  
+    model.Energy_Demand = Param(model.periods, initialize=Initialize_Demand_Dispatch) # Energy Energy_Demand in W 
+    model.Lost_Load_Probability = Param() # Lost load probability in %
+    model.Value_Of_Lost_Load = Param(within=NonNegativeReals) # Value of lost load in USD/W
+    
+    # Parameters of the proyect
+    model.Delta_Time = Param(within=NonNegativeReals) # Time step in hours
+   
+    # VARIABLES
+            
+    # Variables associated to the battery bank
+    
+    model.Energy_Battery_Flow_Out = Var(model.periods, within=NonNegativeReals) # Battery discharge energy in wh
+    model.Energy_Battery_Flow_In = Var(model.periods, within=NonNegativeReals) # Battery charge energy in wh
+    model.State_Of_Charge_Battery = Var(model.periods, within=NonNegativeReals) # State of Charge of the Battery in wh
+   
+    
+     # Variables associated to the diesel generator
+    
+    model.Period_Total_Cost_Generator = Var(model.periods, within=NonNegativeReals)    
+    model.Energy_Generator_Total = Var(model.periods, within=NonNegativeReals)
+    model.Integer_generator = Var(within=NonNegativeIntegers)
+    model.Total_Cost_Generator = Var(within=NonNegativeReals)  
+    model.Generator_Total_Period_Energy = Var(model.periods, within=NonNegativeReals)   
+    model.Generator_Energy_Integer = Var(model.periods, within=NonNegativeIntegers)
+    model.Last_Energy_Generator = Var(model.periods, within=NonNegativeReals)
+    
+    # Varialbles associated to the energy balance
+    model.Lost_Load = Var(model.periods, within=NonNegativeReals) # Energy not suply by the system kWh
+    model.Energy_Curtailment = Var(model.periods, within=NonNegativeReals) # Curtailment of solar energy in kWh
+    
+    # Variables associated to the project
+    
+    
+    model.Scenario_Lost_Load_Cost = Var(within=NonNegativeReals) ####  
+   
+

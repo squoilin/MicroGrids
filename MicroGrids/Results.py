@@ -644,9 +644,110 @@ def Load_results2_Integer(instance):
     return Size_variables
 
 
+def Load_results1_Dispatch(instance):
+    '''
+    This function loads the results that depend of the periods in to a 
+    dataframe and creates a excel file with it.
+    
+    :param instance: The instance of the project resolution created by PYOMO.
+    
+    :return: A dataframe called Time_series with the values of the variables 
+    that depend of the periods.    
+    '''
+    Names = ['Lost_Load', 'PV_Energy', 'Battery_Flow_Out','Battery_Flow_in',
+             'Curtailment', 'Energy_Demand', 'SOC', 'Gen Int', 'Gen energy',
+             'Total Cost Generator']
+    Number_Periods = int(instance.Periods.extract_values()[None])
+    Time_Series = pd.DataFrame(columns= Names, index=range(1,Number_Periods+1))            
+             
+    Lost_Load = instance.Lost_Load.get_values()
+    PV_Energy = instance.Total_Energy_PV.extract_values()
+    Battery_Flow_Out = instance.Energy_Battery_Flow_Out.get_values()
+    Battery_Flow_in = instance.Energy_Battery_Flow_In.get_values()
+    Curtailment = instance.Energy_Curtailment.get_values()
+    Energy_Demand = instance.Energy_Demand.extract_values()
+    SOC = instance.State_Of_Charge_Battery.get_values()
+    Gen_Energy_Integer = instance.Generator_Energy_Integer.get_values()
+    Total_Generator_Energy = instance.Generator_Total_Period_Energy.get_values() 
+    Gen_cost = instance.Period_Total_Cost_Generator.get_values()             
+    
+    
+    for i in range(1,Number_Periods+1):
+        Time_Series['Lost_Load'][i] = Lost_Load[i]
+        Time_Series['PV_Energy'][i] = PV_Energy[i]
+        Time_Series['Battery_Flow_Out'][i] = Battery_Flow_Out[i]
+        Time_Series['Battery_Flow_in'][i] = Battery_Flow_in[i]
+        Time_Series['Curtailment'][i] = Curtailment[i]
+        Time_Series['Energy_Demand'][i] = Energy_Demand[i]
+        Time_Series['SOC'][i] = SOC[i]
+        Time_Series['Gen Int'][i] = Gen_Energy_Integer[i]
+        Time_Series['Gen energy'][i] = Total_Generator_Energy[i]
+        Time_Series['Total Cost Generator'][i] = Gen_cost[i] 
 
+  
+     # Creation of an index starting in the 'model.StartDate' value with a frequency step equal to 'model.Delta_Time'
+    if instance.Delta_Time() >= 1 and type(instance.Delta_Time()) == type(1.0) : # if the step is in hours and minutes
+        foo = str(instance.Delta_Time()) # trasform the number into a string
+        hour = foo[0] # Extract the first character
+        minutes = str(int(float(foo[1:3])*60)) # Extrac the last two character
+        columns = pd.DatetimeIndex(start=instance.StartDate(), 
+                                   periods=instance.Periods(), 
+                                   freq=(hour + 'h'+ minutes + 'min')) # Creation of an index with a start date and a frequency
+    elif instance.Delta_Time() >= 1 and type(instance.Delta_Time()) == type(1): # if the step is in hours
+        columns = pd.DatetimeIndex(start=instance.StartDate(), 
+                                   periods=instance.Periods(), 
+                                   freq=(str(instance.Delta_Time()) + 'h')) # Creation of an index with a start date and a frequency
+    else: # if the step is in minutes
+        columns = pd.DatetimeIndex(start=instance.StartDate(), 
+                                   periods=instance.Periods(), 
+                                   freq=(str(int(instance.Delta_Time()*60)) + 'min'))# Creation of an index with a start date and a frequency
+    
+    Time_Series.index = columns
+       
+    Time_Series.to_excel('Results/Time_Series.xls') # Creating an excel file with the values of the variables that are in function of the periods
+              
 
+    Time_Series_2 = pd.DataFrame()        
+    Time_Series_2['Lost Load'] =  Time_Series['Lost_Load']
+    Time_Series_2['Energy PV'] = Time_Series['PV_Energy']
+    Time_Series_2['Discharge energy from the Battery'] = Time_Series['Battery_Flow_Out']
+    Time_Series_2['Charge energy to the Battery'] = Time_Series['Battery_Flow_in']
+    Time_Series_2['Curtailment'] = Time_Series['Curtailment']
+    Time_Series_2['Energy_Demand'] = Time_Series['Energy_Demand']
+    Time_Series_2['State_Of_Charge_Battery'] = Time_Series['SOC']
+    Time_Series_2['Energy Diesel'] = Time_Series['Gen energy']
+    
 
+    
+    return Time_Series_2
+
+def Load_results2_Dispatch(instance):
+    '''
+    This function extracts the unidimensional variables into a  data frame 
+    and creates a excel file with this data
+    
+    :param instance: The instance of the project resolution created by PYOMO. 
+    
+    :return: Data frame called Size_variables with the variables values. 
+    '''
+    # Load the variables that doesnot depend of the periods in python dyctionarys
+    
+    NPC = instance.ObjectiveFuntion.expr()
+    Mge_1 = instance.Marginal_Cost_Generator_1.value
+    Start_Cost = instance.Start_Cost_Generator.value
+    Min_gen = instance.Generator_Min_Out_Put.value
+    Bat_ef_out = instance.Discharge_Battery_Efficiency.value
+    Bat_ef_in = instance.Charge_Battery_Efficiency.value
+    data3 = [NPC,Mge_1, Start_Cost, Min_gen, Bat_ef_out, Bat_ef_in] # Loading the values to a numpy array  
+    Size_variables = pd.DataFrame(data3,index=['Operation Cost',
+                                               'Marginal cost Partial load', 
+                                               'Start Cost', 'Min gen output',
+                                               'Battery efficiency discharge',
+                                               'Battery efficiency charge'])
+    Size_variables.to_excel('Results/Size.xls') # Creating an excel file with the values of the variables that does not depend of the periods
+    
+    
+    return Size_variables
    
 def Results_Analysis_3(instance):
     

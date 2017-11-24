@@ -123,7 +123,7 @@ def Model_Resolution_binary(model,datapath="Example/data_binary.dat"):
     #options_string="mipgap=0.03", timelimit=1200
     instance.solutions.load_from(results) # Loading solution into instance
     return instance
-
+    
 def Model_Resolution_Integer(model,datapath="Example/data_Integer.dat"):   
     '''
     This function creates the model and call Pyomo to solve the instance of the proyect 
@@ -174,6 +174,58 @@ def Model_Resolution_Integer(model,datapath="Example/data_Integer.dat"):
     model.ScenearioGeneratorTotalCost = Constraint(model.scenario, rule=Sceneario_Generator_Total_Cost)
     model.ScenarioNetPresentCost = Constraint(model.scenario, rule=Scenario_Net_Present_Cost) 
     
+    
+    instance = model.create_instance("Example/data_Integer.dat") # load parameters       
+    opt = SolverFactory('cplex') # Solver use during the optimization    
+#    opt.options['emphasis_memory'] = 'y'
+#    opt.options['node_select'] = 3
+    results = opt.solve(instance, tee=True,options_string="mipgap=0.07") # Solving a model instance 
+
+    #    instance.write(io_options={'emphasis_memory':True})
+    #options_string="mipgap=0.03", timelimit=1200
+    instance.solutions.load_from(results) # Loading solution into instance
+    return instance
+
+    
+def Model_Resolution_Dispatch(model,datapath="Example/data_Dispatch.dat"):   
+    '''
+    This function creates the model and call Pyomo to solve the instance of the proyect 
+    
+    :param model: Pyomo model as defined in the Model_creation library
+    
+    :return: The solution inside an object call instance.
+    '''
+    from Constraints_Dispatch import  Net_Present_Cost,  State_of_Charge, Maximun_Charge, \
+    Minimun_Charge, Max_Bat_in, Max_Bat_out, \
+    Energy_balance, Maximun_Lost_Load, Generator_Cost_1_Integer,  \
+    Total_Cost_Generator_Integer, \
+    Scenario_Lost_Load_Cost, \
+     Generator_Bounds_Min_Integer, Generator_Bounds_Max_Integer,Energy_Genarator_Energy_Max_Integer
+
+    # OBJETIVE FUNTION:
+    model.ObjectiveFuntion = Objective(rule=Net_Present_Cost, sense=minimize)  
+    
+    # CONSTRAINTS
+    #Energy constraints
+    model.EnergyBalance = Constraint(model.periods, rule=Energy_balance)  # Energy balance
+    model.MaximunLostLoad = Constraint(rule=Maximun_Lost_Load) # Maximum permissible lost load
+    
+    # Battery constraints
+    model.StateOfCharge = Constraint(model.periods, rule=State_of_Charge) # State of Charge of the battery
+    model.MaximunCharge = Constraint(model.periods, rule=Maximun_Charge) # Maximun state of charge of the Battery
+    model.MinimunCharge = Constraint(model.periods, rule=Minimun_Charge) # Minimun state of charge
+    model.MaxBatIn = Constraint(model.periods, rule=Max_Bat_in) # Minimun flow of energy for the charge fase
+    model.Maxbatout = Constraint(model.periods, rule=Max_Bat_out) #minimun flow of energy for the discharge fase
+   
+    #Diesel Generator constraints
+    model.GeneratorBoundsMin = Constraint(model.periods, rule=Generator_Bounds_Min_Integer) 
+    model.GeneratorBoundsMax = Constraint(model.periods, rule=Generator_Bounds_Max_Integer)
+    model.GeneratorCost1 = Constraint(model.periods,  rule=Generator_Cost_1_Integer)
+    model.EnergyGenaratorEnergyMax = Constraint(model.periods, rule=Energy_Genarator_Energy_Max_Integer)
+    model.TotalCostGenerator = Constraint(rule=Total_Cost_Generator_Integer)
+    
+    # Financial Constraints
+    model.ScenarioLostLoadCost = Constraint(rule=Scenario_Lost_Load_Cost)
     
     instance = model.create_instance("Example/data_Integer.dat") # load parameters       
     opt = SolverFactory('cplex') # Solver use during the optimization    
