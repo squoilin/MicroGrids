@@ -360,7 +360,7 @@ def Model_Creation_Dispatch(model):
     model.Battery_Nominal_Capacity = Param(within=NonNegativeReals) # Capacity of the battery bank in Wh   
     model.Maximun_Charge_Power= Param(initialize=Max_Power_Battery_Charge) # Maximun charge power in w
     model.Maximun_Discharge_Power = Param(initialize=Max_Power_Battery_Discharge) #Maximun discharge power in w
-    
+    model.Battery_Initial_SOC = Param(within=NonNegativeReals) 
     # Parametes of the diesel generator
     model.Generator_Effiency = Param(within=NonNegativeReals)
     model.Generator_Min_Out_Put = Param(within=NonNegativeReals)

@@ -62,7 +62,7 @@ def State_of_Charge(model,t): # State of Charge of the battery
     :param model: Pyomo model as defined in the Model_creation library.
     '''
     if t==1: # The state of charge (State_Of_Charge) for the period 0 is equal to the Battery size.
-        return model.State_Of_Charge_Battery[t] == model.Battery_Nominal_Capacity - model.Energy_Battery_Flow_Out[t]/model.Discharge_Battery_Efficiency + model.Energy_Battery_Flow_In[t]*model.Charge_Battery_Efficiency
+        return model.State_Of_Charge_Battery[t] == model.Battery_Nominal_Capacity*model.Battery_Initial_SOC - model.Energy_Battery_Flow_Out[t]/model.Discharge_Battery_Efficiency + model.Energy_Battery_Flow_In[t]*model.Charge_Battery_Efficiency
     if t>1:  
         return model.State_Of_Charge_Battery[t] == model.State_Of_Charge_Battery[t-1] - model.Energy_Battery_Flow_Out[t]/model.Discharge_Battery_Efficiency + model.Energy_Battery_Flow_In[t]*model.Charge_Battery_Efficiency    
 

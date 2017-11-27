@@ -227,11 +227,11 @@ def Model_Resolution_Dispatch(model,datapath="Example/data_Dispatch.dat"):
     # Financial Constraints
     model.ScenarioLostLoadCost = Constraint(rule=Scenario_Lost_Load_Cost)
     
-    instance = model.create_instance("Example/data_Integer.dat") # load parameters       
+    instance = model.create_instance("Example/data_dispatch.dat") # load parameters       
     opt = SolverFactory('cplex') # Solver use during the optimization    
 #    opt.options['emphasis_memory'] = 'y'
 #    opt.options['node_select'] = 3
-    results = opt.solve(instance, tee=True,options_string="mipgap=0.07") # Solving a model instance 
+    results = opt.solve(instance, tee=True,options_string="mipgap=0.03") # Solving a model instance 
 
     #    instance.write(io_options={'emphasis_memory':True})
     #options_string="mipgap=0.03", timelimit=1200

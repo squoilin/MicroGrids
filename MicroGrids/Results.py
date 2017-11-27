@@ -143,7 +143,7 @@ def Load_results1(instance):
     Time_Series['Energy Diesel'] = Scenarios['Gen energy '+str(S)]
     Time_Series['Diesel'] = Scenarios['Diesel '+str(S)]    
     
-    return Time_Series,Scenarios
+    return Time_Series
     
 
     
@@ -717,7 +717,7 @@ def Load_results1_Dispatch(instance):
     Time_Series_2['State_Of_Charge_Battery'] = Time_Series['SOC']
     Time_Series_2['Energy Diesel'] = Time_Series['Gen energy']
     
-
+    Time_Series_2.index = columns
     
     return Time_Series_2
 
@@ -733,17 +733,24 @@ def Load_results2_Dispatch(instance):
     # Load the variables that doesnot depend of the periods in python dyctionarys
     
     NPC = instance.ObjectiveFuntion.expr()
-    Mge_1 = instance.Marginal_Cost_Generator_1.value
+    Mge_1 = instance.Marginal_Cost_Generator.value
     Start_Cost = instance.Start_Cost_Generator.value
     Min_gen = instance.Generator_Min_Out_Put.value
     Bat_ef_out = instance.Discharge_Battery_Efficiency.value
     Bat_ef_in = instance.Charge_Battery_Efficiency.value
-    data3 = [NPC,Mge_1, Start_Cost, Min_gen, Bat_ef_out, Bat_ef_in] # Loading the values to a numpy array  
+    Bat_cap = instance.Battery_Nominal_Capacity.value
+    Bat_Soc_1 = instance.Battery_Initial_SOC.value
+    VOLL = instance.Value_Of_Lost_Load.value
+    data3 = [NPC,Mge_1, Start_Cost, Min_gen, Bat_ef_out, Bat_ef_in,Bat_cap,
+             Bat_Soc_1, VOLL] # Loading the values to a numpy array  
     Size_variables = pd.DataFrame(data3,index=['Operation Cost',
                                                'Marginal cost Partial load', 
                                                'Start Cost', 'Min gen output',
                                                'Battery efficiency discharge',
-                                               'Battery efficiency charge'])
+                                               'Battery efficiency charge',
+                                               'Battery nominal capacity',
+                                               'Battery Initial SOC',
+                                               'Value of lost load'])
     Size_variables.to_excel('Results/Size.xls') # Creating an excel file with the values of the variables that does not depend of the periods
     
     
@@ -761,7 +768,7 @@ def Results_Analysis_3(instance):
     Generator_info.to_excel('Results/Generator.xls')
     
     
-def Plot_Energy_Total(instance, Time_Series):  
+def Plot_Energy_Total(instance, Time_Series, plot):  
     '''
     This function creates a plot of the dispatch of energy of a defined number of days.
     
@@ -770,40 +777,106 @@ def Plot_Energy_Total(instance, Time_Series):
     
     
     '''
-    Periods_Day = 24/instance.Delta_Time() # periods in a day
-    for x in range(0, instance.Periods()): # Find the position form wich the plot will start in the Time_Series dataframe
-        foo = pd.DatetimeIndex(start=instance.PlotDay(),periods=1,freq='1h') # Asign the start date of the graphic to a dumb variable
-        if foo == Time_Series.index[x]: 
-           Start_Plot = x # asign the value of x to the position where the plot will start 
-    End_Plot = Start_Plot + instance.PlotTime()*Periods_Day # Create the end of the plot position inside the time_series
-    Time_Series.index=range(1,8761)
-    Plot_Data = Time_Series[Start_Plot:int(End_Plot)] # Extract the data between the start and end position from the Time_Series
-    columns = pd.DatetimeIndex(start=instance.PlotDay(), periods=instance.PlotTime()*Periods_Day, freq=('1h'))    
-    Plot_Data.index=columns
+   
+    if plot == 'No Average':
+        Periods_Day = 24/instance.Delta_Time() # periods in a day
+        for x in range(0, instance.Periods()): # Find the position form wich the plot will start in the Time_Series dataframe
+            foo = pd.DatetimeIndex(start=instance.PlotDay(),periods=1,freq='1h') # Asign the start date of the graphic to a dumb variable
+            if foo == Time_Series.index[x]: 
+               Start_Plot = x # asign the value of x to the position where the plot will start 
+        End_Plot = Start_Plot + instance.PlotTime()*Periods_Day # Create the end of the plot position inside the time_series
+        Time_Series.index=range(1,8761)
+        Plot_Data = Time_Series[Start_Plot:int(End_Plot)] # Extract the data between the start and end position from the Time_Series
+        columns = pd.DatetimeIndex(start=instance.PlotDay(), periods=instance.PlotTime()*Periods_Day, freq=('1h'))    
+        Plot_Data.index=columns
     
+        Plot_Data = Plot_Data.astype('float64')
     
-    Vec = pd.Series(Plot_Data['Energy PV'].values + Plot_Data['Energy Diesel'].values - Plot_Data['Curtailment'].values - Plot_Data['Charge energy to the Battery'].values , index=Plot_Data.index) # Create a vector with the sum of the diesel and solar energy
-    Vec2 = pd.Series(Plot_Data['Energy_Demand'].values + Plot_Data['Curtailment'].values + Plot_Data['Charge energy to the Battery'].values, index=Plot_Data.index ) # Solar super plus of energy
-    
-    Vec3 = pd.Series(Vec.values + Plot_Data['Discharge energy from the Battery'].values, index=Plot_Data.index) # Substracction between the demand and energy discharge from the battery 
-    Vec4 = -Plot_Data['Charge energy to the Battery'] # Creating a vector with the negative values of the energy going to the battery 
-    Vec5 = pd.Series(Plot_Data['Energy_Demand'].values - Plot_Data['Lost Load'].values, index=Plot_Data.index)    
-    
-    ax1= Vec.plot(style='b-', linewidth=0.0) # Plot the line of the diesel energy plus the PV energy
-#    pylab.ylim([-2000000,10000000])
-    ax1.fill_between(Plot_Data.index, Plot_Data['Energy Diesel'].values, Vec.values,   alpha=0.3, color = 'b') # Fill the are of the energy produce by the energy of the PV
-    ax2= Plot_Data['Energy Diesel'].plot(style='r', linewidth=0.5) # Plot the line of the diesel energy
-    ax2.fill_between(Plot_Data.index, 0, Plot_Data['Energy Diesel'].values, alpha=0.2, color='r') # Fill the area of the energy produce by the diesel generator
-    ax3= Plot_Data.Energy_Demand.plot(style='k-',linewidth=1) # Plot the line of the Energy_Demand
-    ax3.fill_between(Plot_Data.index, Vec.values , Vec3.values, alpha=0.3, color='g') # Fill the area of the energy flowing out the battery
-    ax5= Vec4.plot(style='m', linewidth=0.5) # Plot the line of the energy flowing into the battery
-    ax5.fill_between(Plot_Data.index, 0, Vec4, alpha=0.3, color='m') # Fill the area of the energy flowing into the battery
-    ax6= Plot_Data['State_Of_Charge_Battery'].plot(style='k--', secondary_y=True, linewidth=2, alpha=0.7 ) # Plot the line of the State of charge of the battery
-#    pylab.ylim([0,10000000])
-    ax7= Vec2.plot(style='b-', linewidth=0.0) # Plot the line of PV energy that exceeds the demand
-    ax7.fill_between(Plot_Data.index, Plot_Data['Energy_Demand'].values, Vec2.values,  alpha=0.3, color = 'b') # Fill the area between the demand and the curtailment energy
-    ax3.fill_between(Plot_Data.index, Vec5 , Plot_Data['Energy_Demand'].values, alpha=0.3, color='y') 
-    
+        Plot_Data['Charge energy to the Battery'] = -Plot_Data['Charge energy to the Battery']
+ 
+        Vec = Plot_Data['Energy PV'] + Plot_Data['Energy Diesel']
+        Vec2 = (Plot_Data['Energy PV'] + Plot_Data['Energy Diesel'] + 
+                Plot_Data['Discharge energy from the Battery'])
+        
+        
+        ax1= Vec.plot(style='b-', linewidth=0.5) # Plot the line of the diesel energy plus the PV energy
+        ax1.fill_between(Plot_Data.index, Plot_Data['Energy Diesel'].values, Vec.values,   
+                         alpha=0.3, color = 'b')
+        ax2= Plot_Data['Energy Diesel'].plot(style='r', linewidth=0.5)
+        ax2.fill_between(Plot_Data.index, 0, Plot_Data['Energy Diesel'].values, 
+                         alpha=0.2, color='r') # Fill the area of the energy produce by the diesel generator
+        ax3 = Plot_Data['Energy_Demand'].plot(style='k', linewidth=2)
+        ax3.fill_between(Plot_Data.index, Vec.values , Plot_Data['Energy_Demand'].values,
+                         alpha=0.3, color='g', where= Plot_Data['Energy_Demand']>= Vec,interpolate=True)
+        ax5= Plot_Data['Charge energy to the Battery'].plot(style='m', linewidth=0.5) # Plot the line of the energy flowing into the battery
+        ax5.fill_between(Plot_Data.index, 0, Plot_Data['Charge energy to the Battery'].values
+                         , alpha=0.3, color='m') # Fill the area of the energy flowing into the battery
+        ax6= Plot_Data['State_Of_Charge_Battery'].plot(style='k--', secondary_y=True, linewidth=2, alpha=0.7 ) # Plot the line of the State of charge of the battery
+        
+        # Define name  and units of the axis
+        ax1.set_ylabel('Potencia (W)')
+        ax1.set_xlabel('Tiempo (Horas)')
+        ax6.set_ylabel('Estado de carga de la bateria (W)')
+            
+            # Define the legends of the plot
+        From_PV = mpatches.Patch(color='blue',alpha=0.3, label='PV')
+        From_Generator = mpatches.Patch(color='red',alpha=0.3, label='Generador')
+        From_Battery = mpatches.Patch(color='green',alpha=0.5, label='Energia de la bateria')
+        To_Battery = mpatches.Patch(color='magenta',alpha=0.5, label='Energia hacia la bateria')
+        Energy_Demand = mlines.Line2D([], [], color='black',label='Demanda de energia')
+        State_Of_Charge_Battery = mlines.Line2D([], [], color='black',label='Estado de carga de la bateria', linestyle='--',alpha=0.7)
+        plt.legend(handles=[From_Generator, From_PV, From_Battery,
+                            To_Battery, Energy_Demand, State_Of_Charge_Battery],
+                            bbox_to_anchor=(1.83, 1))
+    else:   
+        start = Time_Series.index[0]
+        end = Time_Series.index[instance.Periods()-1]
+        Time_Series = Time_Series.astype('float64')
+        Plot_Data_2 = Time_Series[start:end].groupby([Time_Series[start:end].index.hour]).mean()
+       
+        Plot_Data_2['Charge energy to the Battery'] = -Plot_Data_2['Charge energy to the Battery']
+        Plot_Data = Plot_Data_2
+        Vec = Plot_Data['Energy PV'] + Plot_Data['Energy Diesel']
+        Vec2 = (Plot_Data['Energy PV'] + Plot_Data['Energy Diesel'] + 
+                Plot_Data['Discharge energy from the Battery'])
+        
+        
+        ax1= Vec.plot(style='b-', linewidth=0.5) # Plot the line of the diesel energy plus the PV energy
+        ax1.fill_between(Plot_Data.index, Plot_Data['Energy Diesel'].values, Vec.values,   
+                         alpha=0.3, color = 'b')
+        ax2= Plot_Data['Energy Diesel'].plot(style='r', linewidth=0.5)
+        ax2.fill_between(Plot_Data.index, 0, Plot_Data['Energy Diesel'].values, 
+                         alpha=0.2, color='r') # Fill the area of the energy produce by the diesel generator
+        ax3 = Plot_Data['Energy_Demand'].plot(style='k', linewidth=0.5)
+        ax3.fill_between(Plot_Data.index, Vec.values , Plot_Data['Energy_Demand'].values,
+                         alpha=0.3, color='g', where= Plot_Data['Energy_Demand']>= Vec,interpolate=True)
+        ax5= Plot_Data['Charge energy to the Battery'].plot(style='m', linewidth=0.5) # Plot the line of the energy flowing into the battery
+        ax5.fill_between(Plot_Data.index, 0, Plot_Data['Charge energy to the Battery'].values
+                         , alpha=0.3, color='m') # Fill the area of the energy flowing into the battery
+        ax6= Plot_Data['State_Of_Charge_Battery'].plot(style='k--', secondary_y=True, linewidth=2, alpha=0.7 ) # Plot the line of the State of charge of the battery
+        
+        # Define name  and units of the axis
+        ax1.set_ylabel('Potencia (W)')
+        ax1.set_xlabel('Tiempo (Horas)')
+        ax6.set_ylabel('Estado de carga de la bateria (W)')
+            
+            # Define the legends of the plot
+        From_PV = mpatches.Patch(color='blue',alpha=0.3, label='PV')
+        From_Generator = mpatches.Patch(color='red',alpha=0.3, label='Generador')
+        From_Battery = mpatches.Patch(color='green',alpha=0.5, label='Energia de la bateria')
+        To_Battery = mpatches.Patch(color='magenta',alpha=0.5, label='Energia hacia la bateria')
+        Energy_Demand = mlines.Line2D([], [], color='black',label='Demanda de energia')
+        State_Of_Charge_Battery = mlines.Line2D([], [], color='black',label='Estado de carga de la bateria', linestyle='--',alpha=0.7)
+        plt.legend(handles=[From_Generator, From_PV, From_Battery,
+                            To_Battery, Energy_Demand, State_Of_Charge_Battery],
+                            bbox_to_anchor=(1.83, 1))
+            
+          
+        plt.savefig('LDR.png', bbox_inches='tight')
+
+
+
+
     # Define name  and units of the axis
     ax1.set_ylabel('Power (W)')
     ax1.set_xlabel('Time (Hours)')

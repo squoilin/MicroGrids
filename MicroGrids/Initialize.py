@@ -62,12 +62,6 @@ def Initialize_PV_Energy_Dispatch(model, t):
     return float(PV_Energy[1][t])
     
     
-    
-    
-    
-    
-    
-    
 def Marginal_Cost_Generator_1(model):
     
     return model.Diesel_Cost/(model.Low_Heating_Value*model.Generator_Effiency)

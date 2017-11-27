@@ -8,7 +8,7 @@ param: PlotTime := 1;
 
 param: PlotDay := '06/12/2011 01:00:00';
 
-param: PlotScenario := 2;
+param: PlotScenario := 1;
 
 param: Delta_Time := 1.0;
 
@@ -56,13 +56,11 @@ param: PV_Nominal_Capacity := 300;
 
 param: Battery_Reposition_Time := 10;
 
-param: Scenarios :=3;
+param: Scenarios :=1;
 
 param: Scenario_Weight :=
 
-1   0.34
-2   0.33
-3   0.33;
+1   1;
 
 
 

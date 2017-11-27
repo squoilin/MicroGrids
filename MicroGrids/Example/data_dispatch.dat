@@ -1,0 +1,42 @@
+param: Periods := 8760;
+
+param: StartDate := '01/01/2014 00:00:00';
+
+param: PlotTime := 3;
+
+param: PlotDay := '06/09/2014 00:00:00';
+
+param: Delta_Time := 1;
+
+param: Diesel_Cost := 0.58;
+
+param: Lost_Load_Probability := 0;
+
+param: Discharge_Battery_Efficiency := 0.87;
+
+param: Charge_Battery_Efficiency := 0.87;
+
+param: Deep_of_Discharge := 0.2;
+
+param: Low_Heating_Value := 9890;
+
+param: Value_Of_Lost_Load := 0.0002;
+
+param: Maximun_Battery_Discharge_Time := 1;
+
+param: Maximun_Battery_Charge_Time := 1;
+
+# new parameters
+
+param: Generator_Effiency:= 0.31;
+
+param: Generator_Min_Out_Put:= 0.1; 
+
+param: Cost_Increase := 0.40;
+
+param: Generator_Nominal_Capacity := 58000;
+
+param: Battery_Nominal_Capacity := 478000;
+
+param: Battery_Initial_SOC:= 0.6;
+

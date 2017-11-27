@@ -19,7 +19,7 @@ if formulation == 'LP':
     Model_Creation(model) # Creation of the Sets, parameters and variables.
     instance = Model_Resolution(model) # Resolution of the instance
     ## Upload the resulst from the instance and saving it in excel files
-    Time_Series,Scenarios = Load_results1(instance) # Extract the results of energy from the instance and save it in a excel file 
+    Time_Series = Load_results1(instance) # Extract the results of energy from the instance and save it in a excel file 
     Results = Load_results2(instance) # Save results into a excel file
 elif formulation == 'Binary':
     Model_Creation_binary(model) # Creation of the Sets, parameters and variables.
@@ -40,8 +40,8 @@ elif formulation =='Dispatch':
     
     
 # Post procesing tools
-
-#Plot_Energy_Total(instance, Time_Series)
+plot = 'No Average' # 'No Average' or 'Average'
+Plot_Energy_Total(instance, Time_Series, plot)
 
 #PercentageOfUse = Percentage_Of_Use(Time_Series) # Plot the percentage of use 
 #Energy_Flow = Energy_Flow(Time_Series) # Plot the quantity of energy of each technology analized
